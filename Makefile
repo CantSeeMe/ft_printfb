@@ -6,7 +6,7 @@
 #    By: jye <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/02 15:55:18 by jye               #+#    #+#              #
-#    Updated: 2016/12/06 15:10:05 by jye              ###   ########.fr        #
+#    Updated: 2016/12/06 21:04:15 by jye              ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -29,7 +29,7 @@ LDIR	=	libft
 
 SRC		=	
 OBJ		=	$(addprefix $(ODIR)/, $(addsuffix .o,$(basename $(SRC))))
-LIBFT	=	./libft/libft.a
+LIBFT	=	libft/libft.a
 
 # Lib name
 

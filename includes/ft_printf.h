@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/06 20:17:51 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/06 21:03:06 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@
 # define INT64_MIN 0x8000000000000000L
 # undef UINT64_MAX
 # define UINT64_MAX 0xffffffffffffffffL
-/*
-**printf %conversion, , .precision, type conversion
-*/
 
 /*
 **Typedefs
