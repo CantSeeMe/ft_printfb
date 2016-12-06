@@ -1,0 +1,91 @@
+MEMO:
+	%% = prints %							type: none
+	%c = prints char conversion				type: char // int // wint_t
+	%C = wide character
+/////////////should not segfault with null as parameter; aka prints (null) instead
+	%s = prints	string conversion	  	   	type: char * // wchar_t *
+	%S = prints widechar string				type: wchar_t * (aka unsigned int *)
+////////////
+	%d / %i = prints signed integer			type: signed type
+	%D = long int;
+	%p = prints address in hexa				type: unsigned long long int
+	%O = prints octal conversion			type: unsigned type
+	%o = prints octal conversion			type: unsigned type
+	%x = prints lowercase hexa				type: unsigned type
+	%X = prints uppercase hexa				type: unsigned type
+	%u = prints unsigned integer			type: unsigned type
+////////////////floating type
+	%f = prints floating integer			type: float // double // long double but nope
+	%F = prints floating integer			type: float // double // long double but nope
+	%e = prints l exponent floating			type: float // double // long double but nope
+	%E = prints u exponent floating			type: float // double // long double but nope
+	%a = prints the 23/52 bits in hexa		type: float // double // long double but nope
+	   p+ most significant bit - 1
+	%A = same as a uppercase				type: float // double // long double but nope
+	%g = like e and f shortest precision 	type: float // double // long double
+	%G = like E and F shortest precision	type: float // double // long double
+	%n = prints nothing, but stacks how many character is written so far;
+////// bonus
+	%b = binary								type: unsigned type
+
+////// bit length:
+	hh = char
+	h = short
+	j = intmax_t
+	ll = long long
+	l = long
+	z = size_t
+
+////// takes the argument as follow:
+	   flag//pad//precision//length//format
+	   
+	   NOTE:
+	   pad and precision does the same depending on format conversion
+
+/////// CONVERSION FLAG DONE
+		%c /flag- padding
+		%s /flag- padding
+
+//////typedef struct:
+	length -> hh	: 1
+		   	  h		: 2
+			  l		: 4
+			  ll	: 8
+			  z		: 15
+			  j		: 7
+
+	flag   -> #		: 1
+		   	  -		: 2
+			  +		: 4
+			  0		: 8
+
+	format -> conversion character;
+
+//////flag:
+	+: show the sign of the value
+	-: pad on the right instead of the left
+	0: overwritten by -, show 0 instead of space
+	#: The value should be converted to an 'alternate form'.  For c, d, i, n, p, s, and u
+       conversions, this option has no effect.  For o conversions, the precision of the number 
+	   is increased to force the first character of the output string to a zero.  For x
+       and X conversions, a non-zero result has the string `0x' (or `0X' for X conversions)
+       prepended to it.  For a, A, e, E, f, F, g, and G conversions, the result will always
+       contain a decimal point, even if no digits follow it (normally, a decimal point
+       appears in the results of those conversions only if a digit follows).  For g and G
+       conversions, trailing zeros are not removed from the result as they would otherwise
+       be.
+
+STDARG
+	va_list args; //init list of args
+	va_start(va_list args, var); // args = copy pasta / var = last know value being passed to function
+	va_arg(va_list args, type); // retrieve from args with the type passed as argument
+	va_end(va_list arg); // call this before returning from function, undefined behavior if not called before
+				   		 //	returning
+DOUBLE/FLOAT MEMORY
+
+1bit   8/11bit			23/52bit
+sign / exponent - 1023 / mantissa
+
+RETURN VALUE
+
+	How many character it actually outputs without '\0'
