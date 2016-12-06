@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/02 15:49:17 by jye               #+#    #+#             */
-/*   Updated: 2016/12/06 20:59:26 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/06 21:14:24 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		f_char(t_format *c_flag, va_list arg)
 		return (f_wchar(c_flag, arg));
 	else
 	{
-		op = 255 & va_arg(arg, int);
+		op = va_arg(arg, int);
 		tmp.size = 1;
 		tmp.content = &op;
 		if (c_flag->flag & 1)
