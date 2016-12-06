@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/06 21:03:06 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/06 21:21:10 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void				magic(t_format *c_flag, char **format);
 /*
 ** Undefined behaviors
 */
+int					f_undefined(t_format *c_flag);
 /*
 ** %s %c
 ** Preicision ignored
@@ -118,8 +119,6 @@ int					f_string(t_format *c_flag, va_list arg);
 int					f_wchar(t_format *c_flag, va_list arg);
 int					f_wstring(t_format *c_flag, va_list arg);
 int					w_char(int wchar, char *stack);
-unsigned long int	ft_wstrlen(const int *wchar);
-unsigned long int	wchar_conv(char *bstr, const int qstr);
 /*
 ** %d %D %ld %lld %lD %i %li %lli
 ** padding ignored if precision > padding
