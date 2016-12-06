@@ -5,84 +5,111 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/02 16:03:45 by jye               #+#    #+#             */
-/*   Updated: 2016/12/05 16:36:23 by jye              ###   ########.fr       */
+/*   Created: 2016/12/06 15:28:06 by jye               #+#    #+#             */
+/*   Updated: 2016/12/06 21:00:42 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	f_flag(char **format)
+static int	s_flag(char **format)
 {
-	int		i_flag;
-	char	*f;
-	char	*flag;
+	register char	*f;
+	register char	*flag;
+	register int	z;
 
 	f = *format;
 	flag = FLAG;
-	i_flag = 0;
-	while (*f == flag[0] || *f == flag[1] || *f == flag[2] || *f == flag[3])
+	z = 0;
+	while (*f == flag[0] || *f == flag[1] || *f == flag[2] || *f == flag[3]
+			|| *f == flag[4])
 	{
 		if (*f == flag[0])
-			i_flag |= 1;
+			z |= 1;
 		else if (*f == flag[1])
-			i_flag |= 2;
+			z |= 2;
 		else if (*f == flag[2])
-			i_flag |= 4;
+			z |= 4;
 		else if (*f == flag[3])
-			i_flag |= 8;
+			z |= 8;
+		else if (*f == flag[4])
+			z |= 16;
 		++f;
 	}
 	*format = f;
-	return (i_flag);
+	return (z);
 }
 
-static int	get_int(char **format)
+static int	s_gint(char **format)
 {
-	char			*f;
+	register char	*f;
 	register int	nb;
 
-	if (**format == 0x2e)
-		return (0);
 	f = *format;
 	nb = 0;
-	while (*f >= 0x30 && *f <= 0x39)
-		nb = nb * 10 + (*f++ - 0x30);
+	while (*f && (*f >= 0x30 && *f <= 0x39))
+	{
+		nb = nb * 10 + (*f - 0x30);
+		++f;
+	}
 	*format = f;
 	return (nb);
 }
 
-static int	f_length(char **format)
+static int	s_glen(char **format)
 {
-	register unsigned short *s;
+	unsigned short	*z;
+	char			*f;
+	char			*lenc;
+	int				len;
 
-	s = (unsigned short *)*format;
-	if (*s == BYTE && (*format += 2))
-		return (1);
-	else if ((*s & 0xff) == WORD && (*format += 1))
-		return (2);
-	else if (*s == QWORD && (*format += 2))
-		return (8);
-	else if ((*s & 0xff) == DWORD && (*format += 1))
-		return (4);
-	else if ((*s & 0xff) == MAX && (*format += 1))
-		return (7);
-	else if ((*s & 0xff) == SIZE && (*format += 1))
-		return (15);
-	return (0);
+	z = (unsigned short *)*format;
+	f = *format;
+	lenc = LENGTH;
+	len = 0;
+	while ((*f == lenc[0] || *f == lenc[1] || *f == lenc[2] || *f == lenc[3])
+			&& (z = (unsigned short *)f))
+		if (*z == BYTE && (f += 2))
+			len |= 1;
+		else if (*z == QWORD && (f += 2))
+			len |= 8;
+		else if (*f == WORD && (f += 1))
+			len |= 2;
+		else if (*f == DWORD && (f += 1))
+			len |= 4;
+		else if (*f == SIZE && (f += 1))
+			len |= 16;
+		else if (*f == MAX && (f += 1))
+			len |= 32;
+	*format = f;
+	return (len);
 }
 
 void		magic(t_format *c_flag, char **format)
 {
-	c_flag->flag = f_flag(format);
-	c_flag->pad = get_int(format);
-	if (**format == 0x2e)
+	int tmp;
+
+	c_flag->flag = 0;
+	c_flag->pad = 0;
+	c_flag->length = 0;
+	c_flag->format = 0;
+	c_flag->precision = 0;
+	while (1)
 	{
-		++*format;
-		c_flag->precision = get_int(format);
+		c_flag->flag |= s_flag(format);
+		tmp = s_gint(format);
+		c_flag->pad = tmp != 0 ? tmp : c_flag->pad;
+		if (**format == 0x2e)
+		{
+			(*format) += 1;
+			tmp = s_gint(format);
+			c_flag->precision = tmp != 0 ? tmp : c_flag->precision;
+		}
+		c_flag->length |= s_glen(format);
+		if (**format && ft_strchr(RESET, **format))
+			continue ;
+		c_flag->format = **format;
+		*format += **format ? 1 : 0;
+		return ;
 	}
-	else
-		c_flag->precision = 0;
-	c_flag->length = f_length(format);
-	c_flag->format = *(*format)++;
 }

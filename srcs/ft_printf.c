@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/06 15:13:01 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/06 20:59:38 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	magic_print(char **format)
 	return (a);
 }
 
-int		ft_printf(const char *format, ...)
+int			ft_printf(const char *format, ...)
 {
 	int			nb;
 	va_list		arg;
@@ -40,10 +40,7 @@ int		ft_printf(const char *format, ...)
 	while (*format)
 	{
 		if (*format == 0x25)
-		{
-			format += 1;
 			magic(&c_da, (char **)&format);
-		}
 		nb += magic_print((char **)&format);
 	}
 	va_end(arg);

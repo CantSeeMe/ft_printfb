@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/06 15:20:10 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/06 20:17:51 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 # define FT_PRINTF_H
 # include <stdarg.h>
 # include "libft.h"
-# define FLAG "#-+0"
+# define FLAG "#-+0 "
+# define RESET "#-+0 .lhjz"
+# define DIGIT "0123456789"
+# define UHEX "0123456789ABCDEF"
+# define LHEX "0123456789abcdef"
+# define LENGTH "lhjz"
+# define SNULL "(null)"
 # define BYTE 0x6868
 # define WORD 0x68
 # define DWORD 0x6c
@@ -25,28 +31,41 @@
 # define INF64 0x7ff0000000000000L
 # define NAN32 0x7fc00000
 # define NAN64 0x7ff8000000000000L
-# define ADDRESS 0x7fff00000000
+# define STACK 0x7fff00000000
+# define HEAP 0x7f0000000000
+# define RDONLY 0x100000000
+# undef INT_MAX
 # define INT_MAX 0x7fffffff
+# undef INT_MIN
 # define INT_MIN 0x80000000
+# undef UINT_MAX
 # define UINT_MAX 0xffffffff
+# undef INT64_MAX
 # define INT64_MAX 0x7fffffffffffffffL
+# undef INT64_MIN
 # define INT64_MIN 0x8000000000000000L
+# undef UINT64_MAX
 # define UINT64_MAX 0xffffffffffffffffL
 /*
-**printf %conversion, #-+0flag, .precision, type conversion
+**printf %conversion, , .precision, type conversion
 */
 
 /*
 **Typedefs
 */
-typedef struct	s_format
+typedef struct		s_format
 {
 	int				pad;
 	int				precision;
 	unsigned char	flag;
 	unsigned char	length;
 	unsigned char	format;
-}				t_format;
+}					t_format;
+typedef struct		s_conv
+{
+	unsigned long int	size;
+	void				*content;
+}					t_conv;
 /*
 **Float typedef
 */
@@ -70,33 +89,45 @@ typedef struct		s_double64
 */
 int					ft_printf(const char *format, ...);
 /*
-**Format Part
+** Flag handler
+*/
+int					f_handler(t_format *c_flag, t_conv *conv);
+/*
+** Precision / Padding handler
+*/
+int					pp_handler(t_format *c_flag, t_conv *conv);
+/*
+** Format handler
 */
 void				magic(t_format *c_flag, char **format);
-int					magic_conv(t_format *c_flag, va_list arg);
 /*
-**Flag Handler
+** Link to x format conversion
 */
 /*
-**Precision / Padding handler
+** Undefined behaviors
 */
 /*
-**Format Handler
-*/
-/*
-**Char / CharString Format %s %c
+** %s %c
+** Preicision ignored
+** Defined behavior flag '-'
 */
 int					f_char(t_format *c_flag, va_list arg);
 int					f_string(t_format *c_flag, va_list arg);
 /*
-**wChar / wCharString Format %C %S %ls %lc
+** %C %S %ls %lc
+** Precision ignored
+** Defined behavior flag '-'
 */
 int					f_wchar(t_format *c_flag, va_list arg);
 int					f_wstring(t_format *c_flag, va_list arg);
 int					w_char(int wchar, char *stack);
 unsigned long int	ft_wstrlen(const int *wchar);
+unsigned long int	wchar_conv(char *bstr, const int qstr);
 /*
-**Integer Type %d %D %ld %lld %lD %i %li %lli
+** %d %D %ld %lld %lD %i %li %lli
+** padding ignored if precision > padding
+** precision overwrite flag 0
+** Undefined behavior flag '#'
 */
 int					f_sint(t_format *c_flag, va_list arg);
 int					f_lsint(t_format *c_flag, va_list arg);
@@ -104,27 +135,34 @@ int					f_llsint(t_format *c_flag, va_list arg);
 int					f_itoa(long long int nb, char *buff, int int_min);
 /*
 ** %u %U %lU %llu %lu
+** refer to line 152
+** padding ignored if precision > padding
+** precision overwrite flag 0
 */
 int					f_uint(t_format *c_flag, va_list arg);
 int					f_luint(t_format *c_flag, va_list arg);
 int					f_lluint(t_format *c_flag, va_list arg);
 /*
 ** %o %O %lo %lO %llo
+** bit shifting >> 3
+** refer to line 152
 */
 int					f_uoint(t_format *c_flag, va_list arg);
 int					f_luoint(t_format *c_flag, va_list arg);
 int					f_lluoint(t_format *c_flag, va_list arg);
 /*
 ** %x %lx %llx %X %lX %llX
+** bit shifting >> 4
+** %b
+** bit shifting >> 1;
+** signed flag ignored aka '+' ' '
+** --------------------------------
+** %p Defined behavior '-'
 */
 int					f_uhint(t_format *c_flag, va_list arg);
 int					f_luhint(t_format *c_flag, va_list arg);
 int					f_lluhint(t_format *c_flag, va_list arg);
 /*
-**Memory adress type %p (unsigned long long int) 6 bytes long
-*/
-
-/*
-**Float type Conversion
+** %f %F %a %A %g %G %e %E
 */
 #endif

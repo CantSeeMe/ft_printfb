@@ -51,13 +51,14 @@ MEMO:
 		   	  h		: 2
 			  l		: 4
 			  ll	: 8
-			  z		: 15
-			  j		: 7
+			  z		: 16
+			  j		: 32 aka 'long'
 
 	flag   -> #		: 1
 		   	  -		: 2
 			  +		: 4
 			  0		: 8
+			  ' '	: 16
 
 	format -> conversion character;
 
