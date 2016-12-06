@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/06 21:21:10 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/06 21:29:51 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void				magic(t_format *c_flag, char **format);
 /*
 ** Link to x format conversion
 */
+void				magic_conv(t_format *c_flag, va_list arg);
 /*
 ** Undefined behaviors
 */
