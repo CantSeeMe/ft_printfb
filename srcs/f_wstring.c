@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/04 18:45:59 by jye               #+#    #+#             */
-/*   Updated: 2016/12/06 20:54:01 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/08 21:05:09 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ int							f_wstring(t_format *c_flag, va_list arg)
 			exit(EXIT_FAILURE);
 	tmp.size = wchar_conv(a, wchar);
 	tmp.content = a;
-	if (c_flag->flag & 1)
-		return (flag_handler(c_flag, &tmp));
 	if (c_flag->pad != 0)
 		return (pp_handler(c_flag, &tmp));
 	write(1, a, tmp.size);

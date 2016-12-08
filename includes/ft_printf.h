@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/06 21:29:51 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/08 20:28:32 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 # define FLAG "#-+0 "
 # define RESET "#-+0 .lhjz"
 # define DIGIT "0123456789"
-# define UHEX "0123456789ABCDEF"
-# define LHEX "0123456789abcdef"
+# define BASE "0123456789abcdef"
 # define LENGTH "lhjz"
 # define SNULL "(null)"
 # define BYTE 0x6868
@@ -31,22 +30,7 @@
 # define INF64 0x7ff0000000000000L
 # define NAN32 0x7fc00000
 # define NAN64 0x7ff8000000000000L
-# define STACK 0x7fff00000000
-# define HEAP 0x7f0000000000
-# define RDONLY 0x100000000
-# undef INT_MAX
-# define INT_MAX 0x7fffffff
-# undef INT_MIN
-# define INT_MIN 0x80000000
-# undef UINT_MAX
-# define UINT_MAX 0xffffffff
-# undef INT64_MAX
-# define INT64_MAX 0x7fffffffffffffffL
-# undef INT64_MIN
-# define INT64_MIN 0x8000000000000000L
-# undef UINT64_MAX
-# define UINT64_MAX 0xffffffffffffffffL
-
+# define IS_LWORD 0xffffffff00000000
 /*
 **Typedefs
 */
@@ -129,7 +113,6 @@ int					w_char(int wchar, char *stack);
 int					f_sint(t_format *c_flag, va_list arg);
 int					f_lsint(t_format *c_flag, va_list arg);
 int					f_llsint(t_format *c_flag, va_list arg);
-int					f_itoa(long long int nb, char *buff, int int_min);
 /*
 ** %u %U %lU %llu %lu
 ** refer to line 152
@@ -159,6 +142,12 @@ int					f_lluoint(t_format *c_flag, va_list arg);
 int					f_uhint(t_format *c_flag, va_list arg);
 int					f_luhint(t_format *c_flag, va_list arg);
 int					f_lluhint(t_format *c_flag, va_list arg);
+/*
+** itoa // itoabase
+*/
+int					f_utoa(unsigned long long int z, char *buff);
+int					f_itoa(long long int z, char *buff);
+int					f_utoa_base(unsigned long long int z, char *buff, int base);
 /*
 ** %f %F %a %A %g %G %e %E
 */

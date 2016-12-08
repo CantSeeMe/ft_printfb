@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/02 15:41:05 by jye               #+#    #+#             */
-/*   Updated: 2016/12/06 20:54:20 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/08 21:05:55 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int			f_string(t_format *c_flag, va_list arg)
 			s = SNULL;
 		tmp.size = ft_strlen(s);
 		tmp.content = s;
-		if (c_flag->flag & 1)
-			return (flag_handler(c_flag, &tmp));
 		if (c_flag->pad != 0)
 			return (pp_handler(c_flag, &tmp));
 		write(1, s, tmp.size);
