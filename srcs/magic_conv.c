@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/03 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/08 20:59:28 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/08 22:23:10 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	some_other_shit(t_format *c_flag, va_list arg)
 {
+	(void)arg;
 	if (c_flag->format == 'O')
 		return (0);
 	else if (c_flag->format == 'f' || c_flag->format == 'F')
@@ -30,6 +31,7 @@ static int	some_other_shit(t_format *c_flag, va_list arg)
 
 static int	magic_conv_lzj(t_format *c_flag, va_list arg)
 {
+	(void)arg;
 	if (c_flag->format == 'd' || c_flag->format == 'i')
 		return (0);
 	else if (c_flag->format == 'x' || c_flag->format == 'X')
@@ -43,6 +45,7 @@ static int	magic_conv_lzj(t_format *c_flag, va_list arg)
 
 static int	magic_conv_ll(t_format *c_flag, va_list arg)
 {
+	(void)arg;
 	if (c_flag->format == 'd' || c_flag->format == 'i')
 		return (0);
 	else if (c_flag->format == 'x' || c_flag->format == 'X')
@@ -56,6 +59,7 @@ static int	magic_conv_ll(t_format *c_flag, va_list arg)
 
 static int	magic_conv_nfhh(t_format *c_flag, va_list arg)
 {
+	(void)arg;
 	if (c_flag->format == 'd' || c_flag->format == 'i')
 		return (0);
 	else if (c_flag->format == 'x' || c_flag->format == 'X')
@@ -69,6 +73,7 @@ static int	magic_conv_nfhh(t_format *c_flag, va_list arg)
 
 int			magic_conv(t_format *c_flag, va_list arg)
 {
+	(void)arg;
 	if (c_flag->format == 'c')
 		return (f_char(c_flag, arg));
 	else if (c_flag->format == 's')
@@ -78,7 +83,7 @@ int			magic_conv(t_format *c_flag, va_list arg)
 	else if (c_flag->format == 'S')
 		return (f_wstring(c_flag, arg));
 	else if (c_flag->format == 'p')
-		return (f_lluhint(c_flag, arg));
+		return (0);
 	else if (c_flag->format == '%')
 		return (0);
 	else if (c_flag->format == 'D')

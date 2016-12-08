@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 18:26:46 by jye               #+#    #+#             */
-/*   Updated: 2016/12/08 21:09:16 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/08 21:17:03 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@ int		f_sint(t_format *c_flag, va_list arg)
 	char	buff[11];
 	t_conv	tmp;
 
-	conv = va_arg(arg, int);
+	if (c_flag->length & 1)
+		conv = 255 & va_arg(arg, int);
+	else if (c_flag->length & 2)
+		conv = 65535 & va_arg(arg, int);
+	else
+		conv = va_arg(arg, int);
 	tmp.size = f_itoa(conv, buff);
 	tmp.content = buff;
 	if (c_flag->flag & 28)

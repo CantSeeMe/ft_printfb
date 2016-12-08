@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/08 20:28:32 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/08 22:21:39 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "libft.h"
 # define FLAG "#-+0 "
 # define RESET "#-+0 .lhjz"
-# define DIGIT "0123456789"
 # define BASE "0123456789abcdef"
 # define LENGTH "lhjz"
 # define SNULL "(null)"
@@ -70,21 +69,13 @@ typedef struct		s_double64
 */
 int					ft_printf(const char *format, ...);
 /*
-** Flag handler
-*/
-int					f_handler(t_format *c_flag, t_conv *conv);
-/*
-** Precision / Padding handler
-*/
-int					pp_handler(t_format *c_flag, t_conv *conv);
-/*
 ** Format handler
 */
 void				magic(t_format *c_flag, char **format);
 /*
 ** Link to x format conversion
 */
-void				magic_conv(t_format *c_flag, va_list arg);
+int					magic_conv(t_format *c_flag, va_list arg);
 /*
 ** Undefined behaviors
 */
@@ -98,7 +89,6 @@ int					f_char(t_format *c_flag, va_list arg);
 int					f_string(t_format *c_flag, va_list arg);
 /*
 ** %C %S %ls %lc
-** Precision ignored
 ** Defined behavior flag '-'
 */
 int					f_wchar(t_format *c_flag, va_list arg);

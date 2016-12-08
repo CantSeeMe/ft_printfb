@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/04 18:45:59 by jye               #+#    #+#             */
-/*   Updated: 2016/12/08 21:05:09 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/08 22:56:02 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,31 @@ static unsigned long int	wchar_conv(char *bstr, const int *qstr)
 {
 	unsigned long int offset;
 
-	if (bstr == NULL)
+	if (qstr == NULL)
 		return (6);
 	offset = 0;
 	while (*qstr)
 		offset += w_char(*qstr++, bstr + offset);
 	return (offset);
+}
+
+static void					pp_handler(t_format *c_flag, t_conv *tmp)
+{
+	int		pad;
+
+	pad = c_flag->pad - tmp->size;
+	if (c_flag->flag & 2)
+	{
+		write(1, tmp->content, tmp->size);
+		while (pad-- > 0)
+			write(1, " ", 1);
+	}
+	else
+	{
+		while (pad-- > 0)
+			write(1, " ", 1);
+		write(1, tmp->content, tmp->size);
+	}
 }
 
 int							f_wstring(t_format *c_flag, va_list arg)
@@ -55,9 +74,13 @@ int							f_wstring(t_format *c_flag, va_list arg)
 			exit(EXIT_FAILURE);
 	tmp.size = wchar_conv(a, wchar);
 	tmp.content = a;
+	if (c_flag->precision > 0)
+		if ((unsigned int)c_flag->precision < tmp.size)
+			tmp.size = c_flag->precision;
 	if (c_flag->pad != 0)
-		return (pp_handler(c_flag, &tmp));
+		pp_handler(c_flag, &tmp);
 	write(1, a, tmp.size);
-	free(a);
-	return (tmp.size);
+	if (wchar != NULL)
+		free(a);
+	return (tmp.size >(unsigned int)c_flag->pad ? tmp.size : c_flag->pad);
 }
