@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 18:26:46 by jye               #+#    #+#             */
-/*   Updated: 2016/12/09 22:03:55 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/09 22:58:35 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,14 @@ static int			pp_handler__(t_format *c_flag, t_conv *tmp)
 		lpad = c_flag->pad - (lprec + tmp->size);
 	else
 		lpad = c_flag->pad - tmp->size;
-	if (c_flag->flag & 20)
+	if ((c_flag->flag & 20) || tmp->sign)
 		lpad -= 1;
 	handler__(c_flag, tmp, lpad, lprec);
-	if (tmp->sign)
+	if ((c_flag->flag & 20) || tmp->sign)
+	{
 		tmp->size++;
+		c_flag->precision++;
+	}
 	ret = c_flag->precision > c_flag->pad ? c_flag->precision : c_flag->pad;
 	ret = ret > (int)tmp->size ? ret : tmp->size;
 	return (ret);
@@ -108,7 +111,7 @@ int					f_sint(t_format *c_flag, va_list arg)
 	}
 	conv = word_mlen(c_flag, arg);
 	tmp.sign = conv < 0L ? 1 : 0;
-	tmp.size = f_itoa(conv, buff);
+	tmp.size = f_itoa(c_flag, conv, buff);
 	tmp.content = buff;
 	if (c_flag->pad || c_flag->precision)
 		return (pp_handler__(c_flag, &tmp));

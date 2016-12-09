@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 17:06:42 by jye               #+#    #+#             */
-/*   Updated: 2016/12/09 21:07:12 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/09 23:00:03 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ static int	sf_dsz(long long int z)
 	return (n);
 }
 
-int			f_itoa(long long int z, char *buff)
+int			f_itoa(t_format *c_flag, long long int z, char *buff)
 {
 	int		nlen;
 
+	if (c_flag->flag & 32 && c_flag->precision < 1 && !z)
+		return (0);
 	if (!z)
 	{
 		*buff = 0x30;

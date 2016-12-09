@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/09 21:07:35 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/09 23:01:36 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,6 @@ int					w_char(int wchar, char *stack);
 ** Undefined behavior flag '#'
 */
 int					f_sint(t_format *c_flag, va_list arg);
-int					f_lsint(t_format *c_flag, va_list arg);
-int					f_llsint(t_format *c_flag, va_list arg);
 /*
 ** %u %U %lU %llu %lu
 ** refer to line 152
@@ -138,7 +136,7 @@ int					f_lluhint(t_format *c_flag, va_list arg);
 ** itoa // itoabase
 */
 int					f_utoa(unsigned long long int z, char *buff);
-int					f_itoa(long long int z, char *buff);
+int					f_itoa(t_format *c_flag, long long int z, char *buff);
 int					f_utoa_base(unsigned long long int z, char *buff, int base);
 /*
 ** %f %F %a %A %g %G %e %E
