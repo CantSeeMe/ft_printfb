@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 17:06:42 by jye               #+#    #+#             */
-/*   Updated: 2016/12/08 18:01:32 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/09 15:38:44 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	sf_dsz(unsigned long long int z)
 	return (n);
 }
 
-int		f_utoa(unsigned long long int z, char *buff)
+int			f_utoa(unsigned long long int z, char *buff)
 {
 	int		nlen;
 

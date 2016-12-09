@@ -59,7 +59,7 @@ MEMO:
 			  +		: 4
 			  0		: 8
 			  ' '	: 16
-
+			  '.'	: 32 aka precision
 	format -> conversion character;
 
 //////flag:

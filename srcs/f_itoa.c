@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 17:06:42 by jye               #+#    #+#             */
-/*   Updated: 2016/12/08 18:00:07 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/09 15:38:01 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	not_enuff_room(char *buff)
 	return (1);
 }
 
-int		f_itoa(long long int z, char *buff)
+int			f_itoa(long long int z, char *buff)
 {
 	int		nlen;
 

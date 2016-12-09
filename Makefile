@@ -6,7 +6,7 @@
 #    By: jye <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/02 15:55:18 by jye               #+#    #+#              #
-#    Updated: 2016/12/08 22:27:54 by jye              ###   ########.fr        #
+#    Updated: 2016/12/09 15:56:50 by jye              ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -62,4 +62,4 @@ $(LIBFT)	:
 	@make -C $(LDIR)
 
 main		:
-	$(CC) main.c $(CFLAG) $(PAFLAG) -I$(LHDIR) -I$(HDIR)
+	$(CC) main.c $(PAFLAG) -I$(LHDIR) -I$(HDIR)

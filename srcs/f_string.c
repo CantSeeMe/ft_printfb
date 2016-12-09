@@ -6,14 +6,14 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/02 15:41:05 by jye               #+#    #+#             */
-/*   Updated: 2016/12/08 22:45:34 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/09 15:44:38 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <unistd.h>
 
-static int					pp_handler(t_format *c_flag, t_conv *tmp)
+static int	pp_handler(t_format *c_flag, t_conv *tmp)
 {
 	int		pad;
 
@@ -30,7 +30,7 @@ static int					pp_handler(t_format *c_flag, t_conv *tmp)
 			write(1, " ", 1);
 		write(1, tmp->content, tmp->size);
 	}
-	return (c_flag->pad);
+	return (tmp->size > (unsigned int)c_flag->pad ? tmp->size : c_flag->pad);
 }
 
 int			f_string(t_format *c_flag, va_list arg)
@@ -47,8 +47,9 @@ int			f_string(t_format *c_flag, va_list arg)
 			s = SNULL;
 		tmp.size = ft_strlen(s);
 		tmp.content = s;
-		if (c_flag->precision > 0)
-			if ((unsigned int)c_flag->precision < tmp.size)
+		if (c_flag->flag & 32)
+			if (c_flag->precision >= 0 &&
+				(unsigned int)c_flag->precision < tmp.size)
 				tmp.size = c_flag->precision;
 		if (c_flag->pad != 0)
 			return (pp_handler(c_flag, &tmp));

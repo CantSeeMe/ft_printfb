@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/02 15:49:17 by jye               #+#    #+#             */
-/*   Updated: 2016/12/08 22:07:44 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/09 15:37:53 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	pp_handler(t_format *c_flag, t_conv *tmp)
 	return (c_flag->pad);
 }
 
-int		f_char(t_format *c_flag, va_list arg)
+int			f_char(t_format *c_flag, va_list arg)
 {
 	int		op;
 	t_conv	tmp;

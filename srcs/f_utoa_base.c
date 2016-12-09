@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 18:00:44 by jye               #+#    #+#             */
-/*   Updated: 2016/12/08 18:21:12 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/09 15:37:40 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ static int	sf_dsz(unsigned long long int z, int base)
 
 int			f_utoa_base(unsigned long long int z, char *buff, int base)
 {
-	char	*cbase = BASE;
+	char	*cbase;
 	int		nlen;
 
+	cbase = BASE;
 	if (!z)
 	{
 		*buff = 0x30;
