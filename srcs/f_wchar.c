@@ -6,14 +6,14 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/04 18:45:59 by jye               #+#    #+#             */
-/*   Updated: 2016/12/08 22:20:56 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/09 18:39:43 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <unistd.h>
 
-static int	pp_handler(t_format *c_flag, t_conv *tmp)
+static int	pp_handler__(t_format *c_flag, t_conv *tmp)
 {
 	int		pad;
 
@@ -43,7 +43,7 @@ int			f_wchar(t_format *c_flag, va_list arg)
 	tmp.size = w_char(wchar, a);
 	tmp.content = a;
 	if (c_flag->pad != 0)
-		return (pp_handler(c_flag, &tmp));
+		return (pp_handler__(c_flag, &tmp));
 	write(1, a, tmp.size);
 	return (tmp.size);
 }

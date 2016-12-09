@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 17:06:42 by jye               #+#    #+#             */
-/*   Updated: 2016/12/09 15:38:01 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/09 21:07:12 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,37 +25,29 @@ static int	sf_dsz(long long int z)
 	return (n);
 }
 
-static int	not_enuff_room(char *buff)
-{
-	*buff = 0x30;
-	return (1);
-}
-
 int			f_itoa(long long int z, char *buff)
 {
 	int		nlen;
 
 	if (!z)
-		return (not_enuff_room(buff));
-	nlen = sf_dsz(z);
-	if (z < 0 && (nlen += 1))
 	{
-		buff += nlen;
+		*buff = 0x30;
+		return (1);
+	}
+	nlen = 0;
+	nlen += sf_dsz(z);
+	buff += nlen;
+	if (z < 0)
 		while (z)
 		{
 			*--buff = 0x30 - (z % 10);
 			z /= 10;
 		}
-		*--buff = '-';
-	}
 	else
-	{
-		buff += nlen;
 		while (z)
 		{
 			*--buff = 0x30 + (z % 10);
 			z /= 10;
 		}
-	}
 	return (nlen);
 }

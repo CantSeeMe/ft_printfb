@@ -28,7 +28,7 @@ MEMO:
 ////// bonus
 	%b = binary								type: unsigned type
 
-////// bit length:
+////// bi0t length:
 	hh = char
 	h = short
 	j = intmax_t
@@ -38,9 +38,6 @@ MEMO:
 
 ////// takes the argument as follow:
 	   flag//pad//precision//length//format
-	   
-	   NOTE:
-	   pad and precision does the same depending on format conversion
 
 /////// CONVERSION FLAG DONE
 		%c /flag- padding

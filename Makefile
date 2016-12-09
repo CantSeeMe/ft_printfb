@@ -6,7 +6,7 @@
 #    By: jye <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/02 15:55:18 by jye               #+#    #+#              #
-#    Updated: 2016/12/09 15:56:50 by jye              ###   ########.fr        #
+#    Updated: 2016/12/09 18:19:56 by jye              ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -28,6 +28,7 @@ LDIR	=	libft
 # Files
 
 SRC		=	f_char.c f_string.c f_wstring.c wchar_conv.c f_wchar.c w_char.c \
+			f_sint f_itoa.c \
 			magic_conv.c magic.c ft_printf.c
 OBJ		=	$(addprefix $(ODIR)/, $(addsuffix .o,$(basename $(SRC))))
 LIBFT	=	libft/libft.a

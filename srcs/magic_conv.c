@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/03 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/09 15:39:41 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/09 17:43:59 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	some_other_shit(t_format *c_flag, va_list arg)
 	else
 		return (0);
 }
-
+/******************************
 static int	magic_conv_lzj(t_format *c_flag, va_list arg)
 {
 	(void)arg;
@@ -61,7 +61,7 @@ static int	magic_conv_nfhh(t_format *c_flag, va_list arg)
 {
 	(void)arg;
 	if (c_flag->format == 'd' || c_flag->format == 'i')
-		return (0);
+		return (f_sint);
 	else if (c_flag->format == 'x' || c_flag->format == 'X')
 		return (0);
 	else if (c_flag->format == 'o')
@@ -70,7 +70,7 @@ static int	magic_conv_nfhh(t_format *c_flag, va_list arg)
 		return (0);
 	return (0);
 }
-
+******************/
 int			magic_conv(t_format *c_flag, va_list arg)
 {
 	(void)arg;
@@ -86,16 +86,10 @@ int			magic_conv(t_format *c_flag, va_list arg)
 		return (0);
 	else if (c_flag->format == '%')
 		return (0);
-	else if (c_flag->format == 'D')
-		return (0);
+	else if (c_flag->format == 'D' || c_flag->format == 'd')
+		return (f_sint(c_flag, arg));
 	else if (c_flag->format == 'U')
 		return (0);
-	else if (c_flag->length & 52)
-		return (magic_conv_lzj(c_flag, arg));
-	else if (c_flag->length & 8)
-		return (magic_conv_ll(c_flag, arg));
-	else if (c_flag->length & 3 || c_flag->length == 0)
-		return (magic_conv_nfhh(c_flag, arg));
 	else
 		return (some_other_shit(c_flag, arg));
 }
