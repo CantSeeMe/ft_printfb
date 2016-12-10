@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/09 23:01:36 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/10 17:04:55 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,16 +110,12 @@ int					f_sint(t_format *c_flag, va_list arg);
 ** precision overwrite flag 0
 */
 int					f_uint(t_format *c_flag, va_list arg);
-int					f_luint(t_format *c_flag, va_list arg);
-int					f_lluint(t_format *c_flag, va_list arg);
 /*
 ** %o %O %lo %lO %llo
 ** bit shifting >> 3
 ** refer to line 152
 */
 int					f_uoint(t_format *c_flag, va_list arg);
-int					f_luoint(t_format *c_flag, va_list arg);
-int					f_lluoint(t_format *c_flag, va_list arg);
 /*
 ** %x %lx %llx %X %lX %llX
 ** bit shifting >> 4
@@ -130,12 +126,10 @@ int					f_lluoint(t_format *c_flag, va_list arg);
 ** %p Defined behavior '-'
 */
 int					f_uhint(t_format *c_flag, va_list arg);
-int					f_luhint(t_format *c_flag, va_list arg);
-int					f_lluhint(t_format *c_flag, va_list arg);
 /*
 ** itoa // itoabase
 */
-int					f_utoa(unsigned long long int z, char *buff);
+int					f_utoa(t_format *c_flag, unsigned long long int z, char *buff);
 int					f_itoa(t_format *c_flag, long long int z, char *buff);
 int					f_utoa_base(unsigned long long int z, char *buff, int base);
 /*
