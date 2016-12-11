@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/04 18:45:59 by jye               #+#    #+#             */
-/*   Updated: 2016/12/09 16:07:03 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/11 18:19:46 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ static void					pp_handler(t_format *c_flag, t_conv *tmp)
 	{
 		write(1, tmp->content, tmp->size);
 		while (pad-- > 0)
-			write(1, " ", 1);
+			write(1, &tmp->cpad, 1);
 	}
 	else
 	{
 		while (pad-- > 0)
-			write(1, " ", 1);
+			write(1, &tmp->cpad, 1);
 		write(1, tmp->content, tmp->size);
 	}
 }
@@ -87,6 +87,9 @@ int							f_wstring(t_format *c_flag, va_list arg)
 	if (a == NULL)
 		if ((a = ft_strnew(w_len * 4)) == NULL)
 			exit(EXIT_FAILURE);
+	if ((c_flag->flag & 10) == 10)
+		c_flag->flag ^= 8;
+	tmp.cpad = c_flag->flag & 8 ? 0x30 : 0x20;
 	tmp.size = wchar_conv(c_flag, a, wchar);
 	tmp.content = a;
 	if (c_flag->pad != 0)

@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 18:26:46 by jye               #+#    #+#             */
-/*   Updated: 2016/12/10 17:24:12 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/10 18:57:25 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static unsigned long long	word_mlen(t_format *c_flag, va_list arg)
 	else if (c_flag->length & 1)
 		conv = 0xff & va_arg(arg, unsigned int);
 	else
-		conv = va_arg(arg, unsigned int);
+		conv = 0xffffffff & va_arg(arg, unsigned int);
 	return (conv);
 }
 
