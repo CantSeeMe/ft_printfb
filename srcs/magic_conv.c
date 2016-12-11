@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/03 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/11 20:28:33 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/11 22:49:54 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,51 +24,9 @@ static int	some_other_shit(t_format *c_flag, va_list arg)
 	else if (c_flag->format == 'g' || c_flag->format == 'G')
 		return (0);
 	else
-		return (0);
-}
-/******************************
-static int	magic_conv_lzj(t_format *c_flag, va_list arg)
-{
-	(void)arg;
-	if (c_flag->format == 'd' || c_flag->format == 'i')
-		return (0);
-	else if (c_flag->format == 'x' || c_flag->format == 'X')
-		return (0);
-	else if (c_flag->format == 'o')
-		return (0);
-	else if (c_flag->format == 'u')
-		return (0);
-	return (0);
+		return (f_undefined(c_flag));
 }
 
-static int	magic_conv_ll(t_format *c_flag, va_list arg)
-{
-	(void)arg;
-	if (c_flag->format == 'd' || c_flag->format == 'i')
-		return (0);
-	else if (c_flag->format == 'x' || c_flag->format == 'X')
-		return (0);
-	else if (c_flag->format == 'o')
-		return (0);
-	else if (c_flag->format == 'u')
-		return (0);
-	return (0);
-}
-
-static int	magic_conv_nfhh(t_format *c_flag, va_list arg)
-{
-	(void)arg;
-	if (c_flag->format == 'd' || c_flag->format == 'i')
-		return (f_sint);
-	else if (c_flag->format == 'x' || c_flag->format == 'X')
-		return (0);
-	else if (c_flag->format == 'o')
-		return (0);
-	else if (c_flag->format == 'u')
-		return (0);
-	return (0);
-}
-******************/
 int			magic_conv(t_format *c_flag, va_list arg)
 {
 	(void)arg;

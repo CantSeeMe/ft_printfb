@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/10 17:04:55 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/11 22:26:21 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define BASE "0123456789abcdef"
 # define LENGTH "lhjz"
 # define SNULL "(null)"
+# define PC "%"
 # define BYTE 0x6868
 # define WORD 0x68
 # define DWORD 0x6c
@@ -30,6 +31,7 @@
 # define NAN32 0x7fc00000
 # define NAN64 0x7ff8000000000000L
 # define IS_LWORD 0xffffffff00000000
+
 /*
 **Typedefs
 */
@@ -125,13 +127,25 @@ int					f_uoint(t_format *c_flag, va_list arg);
 ** --------------------------------
 ** %p Defined behavior '-'
 */
-int					f_uhint(t_format *c_flag, va_list arg);
+int					f_uxint(t_format *c_flag, va_list arg);
+int					f_pint(t_format *c_flag, va_list arg);
+/*
+** %%
+*/
+int					f_pcescape(t_format *c_flag);
 /*
 ** itoa // itoabase
 */
-int					f_utoa(t_format *c_flag, unsigned long long int z, char *buff);
-int					f_itoa(t_format *c_flag, long long int z, char *buff);
-int					f_utoa_base(unsigned long long int z, char *buff, int base);
+int					f_utoa(t_format *c_flag, unsigned long long int z,
+					char *buff);
+int					f_itoa(t_format *c_flag, long long int z,
+					char *buff);
+int					f_utox(t_format *c_flag, unsigned long long int z,
+					char *buff);
+int					f_utoo(t_format *c_flag, unsigned long long int z,
+					char *buff);
+int					f_utob(t_format *c_flag, unsigned long long int z,
+					char *buff);
 /*
 ** %f %F %a %A %g %G %e %E
 */
