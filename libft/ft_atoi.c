@@ -26,7 +26,7 @@ int		ft_atoi(char *str)
 		n = *str == '-' ? -1 : n;
 		str++;
 	}
-	while (*str && ft_isdigit(*str))
+	while (*str && (*str >= 0x30 && *str <= 0x39))
 		snt = snt * 10 + (*str++ - 0x30);
 	return (snt * n);
 }

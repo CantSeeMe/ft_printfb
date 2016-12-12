@@ -6,21 +6,37 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 14:26:05 by jye               #+#    #+#             */
-/*   Updated: 2016/11/04 15:21:51 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/10 22:11:09 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t		i;
+	unsigned long long	*ldst;
+	unsigned long long	*lsrc;
+	unsigned char		*cdst;
+	unsigned char		*csrc;
 
-	i = 0;
-	while (i < n)
+	cdst = (unsigned char *)dst;
+	csrc = (unsigned char *)src;
+	ldst = NULL;
+	while (((unsigned long)cdst & (sizeof(unsigned long long) - 1)) && n)
 	{
-		((char *)dest)[i] = ((const char *)src)[i];
-		i++;
+		*cdst++ = *csrc++;
+		--n;
 	}
-	return (dest);
+	if (n >= 8)
+	{
+		ldst = (unsigned long long *)cdst;
+		lsrc = (unsigned long long *)csrc;
+		while (n >= 8 && (*ldst++ = *lsrc++))
+			n -= 8;
+	}
+	csrc = ldst != NULL ? (unsigned char *)lsrc : csrc;
+	cdst = ldst != NULL ? (unsigned char *)ldst : cdst;
+	while (n-- > 0)
+		*cdst++ = *csrc++;
+	return (dst);
 }

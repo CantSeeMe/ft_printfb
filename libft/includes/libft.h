@@ -13,6 +13,8 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <string.h>
+# define LBITS 0x101010101010101L
+# define HBITS 0x8080808080808080L
 
 typedef struct	s_list
 {

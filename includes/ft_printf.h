@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/11 22:26:21 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/12 19:24:37 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,15 @@
 # define BASE "0123456789abcdef"
 # define LENGTH "lhjz"
 # define SNULL "(null)"
-# define PC "%"
+# define BLACK "\x1B[30m"
+# define RED "\x1B[31m"
+# define GREEN "\x1B[32m"
+# define YELLOW "\x1B[33m"
+# define BLUE "\x1B[34m"
+# define MAGENTA "\x1B[35m"
+# define CYAN "\x1B[36m"
+# define WHITE "\x1B[37m"
+# define CRESET "\x1B[0m"
 # define BYTE 0x6868
 # define WORD 0x68
 # define DWORD 0x6c
@@ -132,7 +140,7 @@ int					f_pint(t_format *c_flag, va_list arg);
 /*
 ** %%
 */
-int					f_pcescape(t_format *c_flag);
+int					f_undefined(t_format *c_flag);
 /*
 ** itoa // itoabase
 */
@@ -149,4 +157,8 @@ int					f_utob(t_format *c_flag, unsigned long long int z,
 /*
 ** %f %F %a %A %g %G %e %E
 */
+/*
+**etc function
+*/
+char				*ft_strchrnul(const char *s, unsigned char c);
 #endif

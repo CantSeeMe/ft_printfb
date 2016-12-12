@@ -6,36 +6,54 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/05 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/05 17:47:44 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/12 17:34:43 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+static char	*test__(unsigned long long *magic)
 {
-	unsigned int	*magic;
-	char			*ab;
+	char *cp;
 
-	ab = (char *)str;
-	while ((unsigned long)ab & (sizeof(unsigned int) - 1))
-		if (*ab++ == 0)
-			return (ab - str - 1);
-	magic = (unsigned int *)ab;
+	cp = (char *)magic;
+	if (*cp == 0)
+		return (cp);
+	if (*++cp == 0)
+		return (cp);
+	if (*++cp == 0)
+		return (cp);
+	if (*++cp == 0)
+		return (cp);
+	if (*++cp == 0)
+		return (cp);
+	if (*++cp == 0)
+		return (cp);
+	if (*++cp == 0)
+		return (cp);
+	if (*++cp == 0)
+		return (cp);
+	return (NULL);
+}
+
+size_t		ft_strlen(const char *str)
+{
+	unsigned long long	*magic;
+	char				*cp;
+
+	cp = (char *)str;
+	while ((unsigned long long)cp & (sizeof(*magic) - 1))
+	{
+		if (*cp == 0)
+			return (cp - str);
+		++cp;
+	}
+	magic = (unsigned long long *)cp;
 	while (1)
 	{
-		if ((*magic - 0x1010101) & 0x80808080)
-		{
-			ab = (char *)magic;
-			if (ab[0] == 0)
-				return (ab - str);
-			if (ab[1] == 0)
-				return (ab - str + 1);
-			if (ab[2] == 0)
-				return (ab - str + 2);
-			if (ab[3] == 0)
-				return (ab - str + 3);
-		}
+		if ((*magic - LBITS) & HBITS)
+			if ((cp = test__(magic)))
+				return (cp - str);
 		++magic;
 	}
 }

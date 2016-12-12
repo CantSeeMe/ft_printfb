@@ -6,33 +6,49 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 19:47:40 by jye               #+#    #+#             */
-/*   Updated: 2016/12/05 21:30:35 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/10 22:22:32 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *mem, int c, size_t mlen)
+static unsigned long long	init__(unsigned long long **magic, void *cp,
+									int c)
 {
-	unsigned long long int	bmagic;
-	unsigned long long int	*magic;
-	unsigned char			*shit;
+	unsigned long long bmagic;
 
+	bmagic = 0xff & c;
+	bmagic = (bmagic << 8) | bmagic;
+	bmagic = (bmagic << 16) | bmagic;
+	bmagic = ((bmagic << 16) << 16) | bmagic;
+	*magic = (unsigned long long int *)cp;
+	return (bmagic);
+}
+
+void						*ft_memset(void *mem, int c, size_t mlen)
+{
+	unsigned long long	bmagic;
+	unsigned long long	*magic;
+	unsigned char		*cp;
+
+	magic = NULL;
+	cp = (unsigned char *)mem;
+	while (((unsigned long long)cp & (sizeof(bmagic) - 1)) && mlen)
+	{
+		*cp++ = c;
+		--mlen;
+	}
 	if (mlen >= 8)
 	{
-		bmagic = c & 255;
-		bmagic = (bmagic << 8) | bmagic;
-		bmagic = (bmagic << 16) | bmagic;
-		bmagic = ((bmagic << 16) << 16) | bmagic;
-		magic = (unsigned long long int *)mem;
+		bmagic = init__(&magic, (void *)cp, c);
 		while (mlen >= 8)
 		{
 			*magic++ = bmagic;
 			mlen -= 8;
 		}
 	}
-	shit = (unsigned char *)mem;
-	while (mlen)
-		shit[--mlen] = c & 255;
+	cp = magic == NULL ? cp : (unsigned char *)magic;
+	while (mlen--)
+		*cp++ = c;
 	return (mem);
 }

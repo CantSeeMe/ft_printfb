@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/03 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/11 22:49:54 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/12 16:29:07 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int			magic_conv(t_format *c_flag, va_list arg)
 		return (f_wstring(c_flag, arg));
 	else if (c_flag->format == 'p')
 		return (f_pint(c_flag, arg));
-	else if (c_flag->format == '%')
-		return (f_pcescape(c_flag));
-	else if (c_flag->format == 'D' || c_flag->format == 'd' || 
+	else if (c_flag->format == 'n')
+		return (0);
+	else if (c_flag->format == 'D' || c_flag->format == 'd' ||
 			c_flag->format == 'i')
 		return (f_sint(c_flag, arg));
 	else if (c_flag->format == 'U' || c_flag->format == 'u')

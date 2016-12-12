@@ -14,11 +14,11 @@
 
 char	*ft_strrchr(const char *s, unsigned char c)
 {
-	char h;
+	const char *h;
 
-	h = *s;
+	h = s;
 	s += ft_strlen(s);
-	while (*s != h && *s != c)
+	while (s != h && *s != c)
 		--s;
 	return (*s == c ? (char *)s : NULL);
 }

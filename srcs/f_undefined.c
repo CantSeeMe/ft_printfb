@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   f_pcescape.c                                       :+:      :+:    :+:   */
+/*   f_undefined.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 20:32:26 by jye               #+#    #+#             */
-/*   Updated: 2016/12/11 22:30:07 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/12 17:41:59 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,22 @@ static int	pp_handler(t_format *c_flag, t_conv *tmp)
 	return (c_flag->pad);
 }
 
-int			f_pcescape(t_format *c_flag)
+int			f_undefined(t_format *c_flag)
 {
 	t_conv	tmp;
-	
+	char	undef;
+
 	if ((c_flag->flag & 10) == 10)
 		c_flag->flag ^= 8;
 	tmp.cpad = c_flag->flag & 8 ? 0x30 : 0x20;
 	tmp.size = 1;
-	tmp.content = PC;
+	undef = c_flag->format;
+	tmp.content = &undef;
 	if (c_flag->pad != 0)
 		return (pp_handler(c_flag, &tmp));
-	write(1, PC, 1);
-	return (1);
+	write(1, &undef, 1);
+	if (undef)
+		return (1);
+	else
+		return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/06 15:28:06 by jye               #+#    #+#             */
-/*   Updated: 2016/12/09 15:44:18 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/12 17:46:58 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,7 @@ void		magic(t_format *c_flag, char **format)
 		if (**format == 0x2e && (c_flag->flag |= 32))
 		{
 			(*format) += 1;
-			tmp = s_gint(format);
-			c_flag->precision = tmp != 0 ? tmp : c_flag->precision;
+			c_flag->precision = s_gint(format);
 		}
 		c_flag->length |= s_glen(format);
 		if (**format && ft_strchr(RESET, **format))

@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strchrnul.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/05 14:22:09 by jye               #+#    #+#             */
-/*   Updated: 2016/12/09 16:23:16 by jye              ###   ########.fr       */
+/*   Created: 2016/12/12 18:06:54 by jye               #+#    #+#             */
+/*   Updated: 2016/12/12 18:15:28 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#include "ft_printf.h"
 
 static unsigned long long	init__(unsigned long long **magic,
 									void *cp, unsigned char c)
@@ -26,7 +25,7 @@ static unsigned long long	init__(unsigned long long **magic,
 	return (mask);
 }
 
-char						*ft_strchr(const char *s, unsigned char c)
+char						*ft_strchrnul(const char *s, unsigned char c)
 {
 	unsigned long long	mask;
 	unsigned long long	*magic;
@@ -36,7 +35,7 @@ char						*ft_strchr(const char *s, unsigned char c)
 	cp = (char *)s - 1;
 	while ((sizeof(unsigned long long) - 1) & (unsigned long)++cp)
 		if (*cp == c || *cp == 0)
-			return (*cp == c ? cp : NULL);
+			return (cp);
 	mask = init__(&magic, cp, c);
 	while (1)
 	{
@@ -45,10 +44,11 @@ char						*ft_strchr(const char *s, unsigned char c)
 			cp = (char *)magic;
 			i = -1;
 			while (++i < 8)
-				if (*cp == c)
+			{
+				if (*cp == c || *cp == 0)
 					return (cp);
-				else if (*cp++ == 0)
-					return (NULL);
+				++cp;
+			}
 		}
 		++magic;
 	}
