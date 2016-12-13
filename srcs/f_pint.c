@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 18:26:46 by jye               #+#    #+#             */
-/*   Updated: 2016/12/11 19:13:25 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/12 21:29:13 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,22 @@ static void					handler__(t_format *c_flag, t_conv *tmp,
 	if (c_flag->flag & 2)
 	{
 		write(1, "0x", 2);
-		while (lprec-- > 0)
-			write(1, "0", 1);
+		if (lprec > 0)
+			print_precision(lprec);
 		write(1, tmp->content, tmp->size);
-		while (lpad-- > 0)
-			write(1, &tmp->cpad, 1);
+		if (lpad > 0)
+			print_padding(lpad, tmp->cpad);
 	}
 	else
 	{
 		if (tmp->cpad == 0x30)
 			write(1, "0x", 2);
-		while (lpad-- > 0)
-			write(1, &tmp->cpad, 1);
+		if (lpad > 0)
+			print_padding(lpad, tmp->cpad);
 		if (tmp->cpad != 0x30)
 			write(1, "0x", 2);
-		while (lprec-- > 0)
-			write(1, "0", 1);
+		if (lprec > 0)
+			print_precision(lprec);
 		write(1, tmp->content, tmp->size);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/06 15:28:06 by jye               #+#    #+#             */
-/*   Updated: 2016/12/12 17:46:58 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 14:48:35 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,24 @@ static int	s_flag(char **format)
 	return (z);
 }
 
-static int	s_gint(char **format)
+static int	s_gint(char **format, t_format *c_flag, va_list arg, char bool_prec__)
 {
 	register char	*f;
 	register int	nb;
+	(void)arg;
 
 	f = *format;
 	nb = 0;
+	if (**format == 0x2a)
+	{
+		*format += 1;
+		if (((nb = va_arg(arg, int)) & 0x80000000) && !bool_prec__)
+		{
+			nb = (0x80000000 - (nb ^ 0x80000000));
+			c_flag->flag |= 2;
+		}
+		return (nb);
+	}
 	while (*f && (*f >= 0x30 && *f <= 0x39))
 	{
 		nb = nb * 10 + (*f - 0x30);
@@ -85,10 +96,11 @@ static int	s_glen(char **format)
 	return (len);
 }
 
-void		magic(t_format *c_flag, char **format)
+void		magic(t_format *c_flag, char **format, va_list arg)
 {
 	int tmp;
 
+	(void)arg;
 	c_flag->flag = 0;
 	c_flag->pad = 0;
 	c_flag->length = 0;
@@ -97,12 +109,12 @@ void		magic(t_format *c_flag, char **format)
 	while (1)
 	{
 		c_flag->flag |= s_flag(format);
-		tmp = s_gint(format);
+		tmp = s_gint(format, c_flag, arg, 0);
 		c_flag->pad = tmp != 0 ? tmp : c_flag->pad;
 		if (**format == 0x2e && (c_flag->flag |= 32))
 		{
 			(*format) += 1;
-			c_flag->precision = s_gint(format);
+			c_flag->precision = s_gint(format, c_flag, arg, 1);
 		}
 		c_flag->length |= s_glen(format);
 		if (**format && ft_strchr(RESET, **format))

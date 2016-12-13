@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/02 15:41:05 by jye               #+#    #+#             */
-/*   Updated: 2016/12/11 17:21:37 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/12 21:41:04 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ static int	pp_handler(t_format *c_flag, t_conv *tmp)
 	if (c_flag->flag & 2)
 	{
 		write(1, tmp->content, tmp->size);
-		while (pad-- > 0)
-			write(1, &tmp->cpad, 1);
+		if (pad > 0)
+			print_padding(pad, tmp->cpad);
 	}
 	else
 	{
-		while (pad-- > 0)
-			write(1, &tmp->cpad, 1);
+		if (pad > 0)
+			print_padding(pad, tmp->cpad);
 		write(1, tmp->content, tmp->size);
 	}
 	return (tmp->size > (unsigned int)c_flag->pad ? tmp->size : c_flag->pad);

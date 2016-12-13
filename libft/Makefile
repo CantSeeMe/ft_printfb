@@ -6,12 +6,12 @@
 #    By: jye <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/03 19:36:45 by jye               #+#    #+#              #
-#    Updated: 2016/12/05 21:33:03 by jye              ###   ########.fr        #
+#    Updated: 2016/12/12 21:20:06 by jye              ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 CC=gcc
-FLAG=-Wall -Werror -Wextra
+FLAG=-Wall -Werror -Wextra -g
 SRC=ft_putchar.c \
 		ft_putstr.c \
 		ft_memset.c \

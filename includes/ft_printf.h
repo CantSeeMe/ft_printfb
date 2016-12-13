@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/12 19:24:37 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 16:06:21 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <stdarg.h>
 # include "libft.h"
 # define FLAG "#-+0 "
-# define RESET "#-+0 .lhjz"
+# define RESET "#-+0 .*lhjz"
 # define BASE "0123456789abcdef"
 # define LENGTH "lhjz"
 # define SNULL "(null)"
@@ -28,6 +28,7 @@
 # define CYAN "\x1B[36m"
 # define WHITE "\x1B[37m"
 # define CRESET "\x1B[0m"
+# define BUFF_SIZE 512
 # define BYTE 0x6868
 # define WORD 0x68
 # define DWORD 0x6c
@@ -43,8 +44,16 @@
 /*
 **Typedefs
 */
+typedef struct		s_buffer
+{
+	void	(*w)(struct s_buffer *);
+	int		z;
+	int		i;
+	char	buff[BUFF_SIZE];
+}					t_buffer;
 typedef struct		s_format
 {
+	t_buffer		buffer;
 	int				pad;
 	int				precision;
 	unsigned char	flag;
@@ -83,7 +92,7 @@ int					ft_printf(const char *format, ...);
 /*
 ** Format handler
 */
-void				magic(t_format *c_flag, char **format);
+void				magic(t_format *c_flag, char **format, va_list arg);
 /*
 ** Link to x format conversion
 */
@@ -161,4 +170,6 @@ int					f_utob(t_format *c_flag, unsigned long long int z,
 **etc function
 */
 char				*ft_strchrnul(const char *s, unsigned char c);
+void				print_padding(int lpad, char cpad);
+void				print_precision(int lprec);
 #endif

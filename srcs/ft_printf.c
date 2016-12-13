@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/12 19:35:44 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 16:06:20 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ static int	magic_print(char **format)
 	f = *format;
 	s_modulo = ft_strchrnul(f, 0x25);
 	s_bracket = ft_memchr(f, 0x7b, s_modulo - f);
-	actual = s_modulo > s_bracket ? s_modulo : s_bracket;
+	actual = s_bracket ? s_bracket : s_modulo;
 	to_w = actual - f;
 	write(1, f, to_w);
 	*format += to_w;
 	return (to_w);
 }
 
-static int	is_color(char *buff)
+static int	is_color(char *buff, t_format *c_flag)
 {
 	char	bool__;
 
@@ -68,7 +68,7 @@ static int	is_modulo(char *buff)
 	return (a - buff);
 }
 
-static int	magic_color(char **color)
+static int	magic_color(char **color, t_format *c_flag)
 {
 	char	*f;
 	char	buff[11];
@@ -105,12 +105,13 @@ int			ft_printf(const char *format, ...)
 		return (0);
 	va_start(arg, format);
 	nb = 0;
+	init_t_buffer__(&c_da.buffer);
 	while (*format)
 	{
 		if (*format == 0x25)
 		{
 			format += 1;
-			magic(&c_da, (char **)&format);
+			magic(&c_da, (char **)&format, arg);
 			nb += magic_conv(&c_da, arg);
 		}
 		else if (*format == 0x7b)

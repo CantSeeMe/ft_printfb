@@ -6,7 +6,7 @@
 #    By: jye <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/02 15:55:18 by jye               #+#    #+#              #
-#    Updated: 2016/12/12 18:10:11 by jye              ###   ########.fr        #
+#    Updated: 2016/12/12 20:56:17 by jye              ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -30,8 +30,8 @@ LDIR	=	libft
 SRC		=	f_char.c f_string.c f_wstring.c f_wchar.c w_char.c \
 			f_sint f_itoa.c f_uint.c f_utoa.c \
 			f_uoint.c f_utox.c f_uxint.c f_utoo.c f_pint.c \
-			f_undefined.c ft_strchrnul.c\
-			magic_conv.c magic.c ft_printf.c
+			f_undefined.c ft_strchrnul.c \
+			magic_conv.c magic.c ft_printf.c optimizacion.c
 OBJ		=	$(addprefix $(ODIR)/, $(addsuffix .o,$(basename $(SRC))))
 LIBFT	=	libft/libft.a
 
