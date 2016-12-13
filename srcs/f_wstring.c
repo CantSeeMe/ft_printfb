@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/04 18:45:59 by jye               #+#    #+#             */
-/*   Updated: 2016/12/11 18:19:46 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 17:21:39 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,19 @@ static void					pp_handler(t_format *c_flag, t_conv *tmp)
 	pad = c_flag->pad - tmp->size;
 	if (c_flag->flag & 2)
 	{
-		write(1, tmp->content, tmp->size);
-		while (pad-- > 0)
-			write(1, &tmp->cpad, 1);
+		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
+		if (pad > 0)
+			print_padding(pad, tmp->cpad, &c_flag->buffer);
 	}
 	else
 	{
-		while (pad-- > 0)
-			write(1, &tmp->cpad, 1);
-		write(1, tmp->content, tmp->size);
+		if (pad > 0)
+			print_padding(pad, tmp->cpad, &c_flag->buffer);
+		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
 	}
 }
 
-int							f_wstring(t_format *c_flag, va_list arg)
+void						f_wstring(t_format *c_flag, va_list arg)
 {
 	int					*wchar;
 	char				*a;
@@ -95,8 +95,8 @@ int							f_wstring(t_format *c_flag, va_list arg)
 	if (c_flag->pad != 0)
 		pp_handler(c_flag, &tmp);
 	else
-		write(1, a, tmp.size);
+		c_flag->buffer.w(&c_flag->buffer, a, tmp.size);
 	if (wchar != NULL)
 		free(a);
-	return (tmp.size > (unsigned int)c_flag->pad ? tmp.size : c_flag->pad);
+//	return (tmp.size > (unsigned int)c_flag->pad ? tmp.size : c_flag->pad);
 }

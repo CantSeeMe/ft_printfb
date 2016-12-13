@@ -6,12 +6,11 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 18:26:46 by jye               #+#    #+#             */
-/*   Updated: 2016/12/12 21:41:21 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 17:47:58 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <unistd.h>
 
 static unsigned long long	word_mlen(t_format *c_flag, va_list arg)
 {
@@ -34,26 +33,26 @@ static void					handler__(t_format *c_flag, t_conv *tmp,
 	if (c_flag->flag & 2)
 	{
 		if (lprec > 0)
-			print_precision(lprec);
-		write(1, tmp->content, tmp->size);
+			print_precision(lprec, &c_flag->buffer);
+		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
 		if (lpad > 0)
-			print_padding(lpad, tmp->cpad);
+			print_padding(lpad, tmp->cpad, &c_flag->buffer);
 	}
 	else
 	{
 		if (lpad > 0)
-			print_padding(lpad, tmp->cpad);
+			print_padding(lpad, tmp->cpad, &c_flag->buffer);
 		if (lprec > 0)
-			print_precision(lprec);
-		write(1, tmp->content, tmp->size);
+			print_precision(lprec, &c_flag->buffer);
+		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
 	}
 }
 
-static int					pp_handler__(t_format *c_flag, t_conv *tmp)
+static void					pp_handler__(t_format *c_flag, t_conv *tmp)
 {
 	int		lpad;
 	int		lprec;
-	int		ret;
+//	int		ret;
 
 	lpad = 0;
 	lprec = 0;
@@ -65,12 +64,14 @@ static int					pp_handler__(t_format *c_flag, t_conv *tmp)
 	else
 		lpad = c_flag->pad - tmp->size;
 	handler__(c_flag, tmp, lpad, lprec);
+/******************
 	ret = c_flag->precision > c_flag->pad ? c_flag->precision : c_flag->pad;
 	ret = ret > (int)tmp->size ? ret : tmp->size;
 	return (ret);
+******************/
 }
 
-int							f_uint(t_format *c_flag, va_list arg)
+void						f_uint(t_format *c_flag, va_list arg)
 {
 	unsigned long long	conv;
 	char				buff[21];
@@ -87,7 +88,7 @@ int							f_uint(t_format *c_flag, va_list arg)
 	tmp.size = f_utoa(c_flag, conv, buff);
 	tmp.content = buff;
 	if (c_flag->pad || c_flag->precision)
-		return (pp_handler__(c_flag, &tmp));
-	write(1, buff, tmp.size);
-	return (tmp.size);
+		pp_handler__(c_flag, &tmp);
+	else
+		c_flag->buffer.w(&c_flag->buffer, buff, tmp.size);
 }

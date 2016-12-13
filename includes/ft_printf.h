@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/13 16:06:21 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 17:21:57 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 */
 typedef struct		s_buffer
 {
-	void	(*w)(struct s_buffer *);
+	void	(*w)(struct s_buffer *, void *, unsigned long);
 	int		z;
 	int		i;
 	char	buff[BUFF_SIZE];
@@ -96,24 +96,24 @@ void				magic(t_format *c_flag, char **format, va_list arg);
 /*
 ** Link to x format conversion
 */
-int					magic_conv(t_format *c_flag, va_list arg);
+void				magic_conv(t_format *c_flag, va_list arg);
 /*
 ** Undefined behaviors
 */
-int					f_undefined(t_format *c_flag);
+void				f_undefined(t_format *c_flag);
 /*
 ** %s %c
 ** Preicision ignored
 ** Defined behavior flag '-'
 */
-int					f_char(t_format *c_flag, va_list arg);
-int					f_string(t_format *c_flag, va_list arg);
+void				f_char(t_format *c_flag, va_list arg);
+void				f_string(t_format *c_flag, va_list arg);
 /*
 ** %C %S %ls %lc
 ** Defined behavior flag '-'
 */
-int					f_wchar(t_format *c_flag, va_list arg);
-int					f_wstring(t_format *c_flag, va_list arg);
+void				f_wchar(t_format *c_flag, va_list arg);
+void				f_wstring(t_format *c_flag, va_list arg);
 int					w_char(int wchar, char *stack);
 /*
 ** %d %D %ld %lld %lD %i %li %lli
@@ -121,20 +121,20 @@ int					w_char(int wchar, char *stack);
 ** precision overwrite flag 0
 ** Undefined behavior flag '#'
 */
-int					f_sint(t_format *c_flag, va_list arg);
+void				f_sint(t_format *c_flag, va_list arg);
 /*
 ** %u %U %lU %llu %lu
 ** refer to line 152
 ** padding ignored if precision > padding
 ** precision overwrite flag 0
 */
-int					f_uint(t_format *c_flag, va_list arg);
+void				f_uint(t_format *c_flag, va_list arg);
 /*
 ** %o %O %lo %lO %llo
 ** bit shifting >> 3
 ** refer to line 152
 */
-int					f_uoint(t_format *c_flag, va_list arg);
+void				f_uoint(t_format *c_flag, va_list arg);
 /*
 ** %x %lx %llx %X %lX %llX
 ** bit shifting >> 4
@@ -144,12 +144,12 @@ int					f_uoint(t_format *c_flag, va_list arg);
 ** --------------------------------
 ** %p Defined behavior '-'
 */
-int					f_uxint(t_format *c_flag, va_list arg);
-int					f_pint(t_format *c_flag, va_list arg);
+void				f_uxint(t_format *c_flag, va_list arg);
+void				f_pint(t_format *c_flag, va_list arg);
 /*
 ** %%
 */
-int					f_undefined(t_format *c_flag);
+void				f_undefined(t_format *c_flag);
 /*
 ** itoa // itoabase
 */
@@ -170,6 +170,10 @@ int					f_utob(t_format *c_flag, unsigned long long int z,
 **etc function
 */
 char				*ft_strchrnul(const char *s, unsigned char c);
-void				print_padding(int lpad, char cpad);
-void				print_precision(int lprec);
+void				print_padding(int lpad, char cpad, struct s_buffer *buffer);
+void				print_precision(int lprec, struct s_buffer *buffer);
+void				init_t_buffer__(t_buffer *buffer);
+void				write_t_buffer__(struct s_buffer *buffer, void *s,
+									unsigned long n);
+void				print_t_buffer__(struct s_buffer *buffer);
 #endif

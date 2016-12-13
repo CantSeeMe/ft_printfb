@@ -6,34 +6,34 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/04 18:45:59 by jye               #+#    #+#             */
-/*   Updated: 2016/12/12 21:47:56 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 17:17:31 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <unistd.h>
 
-static int	pp_handler__(t_format *c_flag, t_conv *tmp)
+static void	pp_handler__(t_format *c_flag, t_conv *tmp)
 {
 	int		pad;
 
 	pad = c_flag->pad - tmp->size;
 	if (c_flag->flag & 2)
 	{
-		write(1, tmp->content, tmp->size);
+		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
 		if (pad > 0)
-			print_padding(pad, tmp->cpad);
+			print_padding(pad, tmp->cpad, &c_flag->buffer);
 	}
 	else
 	{
 		if (pad > 0)
-			print_padding(pad, tmp->cpad);
-		write(1, tmp->content, tmp->size);
+			print_padding(pad, tmp->cpad, &c_flag->buffer);
+		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
 	}
-	return (c_flag->pad);
+//	return (c_flag->pad);
 }
 
-int			f_wchar(t_format *c_flag, va_list arg)
+void		f_wchar(t_format *c_flag, va_list arg)
 {
 	int		wchar;
 	char	a[5];
@@ -46,7 +46,7 @@ int			f_wchar(t_format *c_flag, va_list arg)
 	tmp.size = w_char(wchar, a);
 	tmp.content = a;
 	if (c_flag->pad != 0)
-		return (pp_handler__(c_flag, &tmp));
-	write(1, a, tmp.size);
-	return (tmp.size);
+		pp_handler__(c_flag, &tmp);
+	c_flag->buffer.w(&c_flag->buffer, a, tmp.size);
+//	return (tmp.size);
 }

@@ -6,34 +6,32 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/02 15:41:05 by jye               #+#    #+#             */
-/*   Updated: 2016/12/12 21:41:04 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 17:48:19 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <unistd.h>
 
-static int	pp_handler(t_format *c_flag, t_conv *tmp)
+static void	pp_handler(t_format *c_flag, t_conv *tmp)
 {
 	int		pad;
 
 	pad = c_flag->pad - tmp->size;
 	if (c_flag->flag & 2)
 	{
-		write(1, tmp->content, tmp->size);
+		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
 		if (pad > 0)
-			print_padding(pad, tmp->cpad);
+			print_padding(pad, tmp->cpad, &c_flag->buffer);
 	}
 	else
 	{
 		if (pad > 0)
-			print_padding(pad, tmp->cpad);
-		write(1, tmp->content, tmp->size);
+			print_padding(pad, tmp->cpad, &c_flag->buffer);
+		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
 	}
-	return (tmp->size > (unsigned int)c_flag->pad ? tmp->size : c_flag->pad);
 }
 
-int			f_string(t_format *c_flag, va_list arg)
+void		f_string(t_format *c_flag, va_list arg)
 {
 	char		*s;
 	t_conv		tmp;
@@ -55,8 +53,8 @@ int			f_string(t_format *c_flag, va_list arg)
 				(unsigned int)c_flag->precision < tmp.size)
 				tmp.size = c_flag->precision;
 		if (c_flag->pad != 0)
-			return (pp_handler(c_flag, &tmp));
-		write(1, s, tmp.size);
+			pp_handler(c_flag, &tmp);
+		else
+			c_flag->buffer.w(&c_flag->buffer, s, tmp.size);
 	}
-	return (tmp.size);
 }

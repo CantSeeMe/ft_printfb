@@ -6,12 +6,11 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 18:26:46 by jye               #+#    #+#             */
-/*   Updated: 2016/12/12 21:31:34 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 17:42:02 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <unistd.h>
 
 static long long	word_mlen(t_format *c_flag, va_list arg)
 {
@@ -37,13 +36,13 @@ static long long	word_mlen(t_format *c_flag, va_list arg)
 static void			f_handler__(t_format *c_flag, t_conv *tmp, char bool__)
 {
 	if (tmp->sign == 1)
-		write(1, "-", 1);
+		c_flag->buffer.w(&c_flag->buffer, "-", 1);
 	else if (c_flag->flag & 4)
-		write(1, "+", 1);
+		c_flag->buffer.w(&c_flag->buffer, "+", 1);
 	else if (c_flag->flag & 16)
-		write(1, " ", 1);
+		c_flag->buffer.w(&c_flag->buffer, " ", 1);
 	if (!bool__)
-		write(1, tmp->content, tmp->size);
+		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
 }
 
 static void			handler__(t_format *c_flag, t_conv *tmp,
@@ -53,30 +52,30 @@ static void			handler__(t_format *c_flag, t_conv *tmp,
 	{
 		f_handler__(c_flag, tmp, 1);
 		if (lprec > 0)
-			print_precision(lprec);
-		write(1, tmp->content, tmp->size);
+			print_precision(lprec, &c_flag->buffer);
+		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
 		if (lpad > 0)
-			print_padding(lpad, tmp->cpad);
+			print_padding(lpad, tmp->cpad, &c_flag->buffer);
 	}
 	else
 	{
 		if (tmp->cpad == 0x30)
 			f_handler__(c_flag, tmp, 1);
 		if (lpad > 0)
-			print_padding(lpad, tmp->cpad);
+			print_padding(lpad, tmp->cpad, &c_flag->buffer);
 		if (tmp->cpad != 0x30)
 			f_handler__(c_flag, tmp, 1);
 		if (lprec > 0)
-			print_precision(lprec);
-		write(1, tmp->content, tmp->size);
+			print_precision(lprec, &c_flag->buffer);
+		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
 	}
 }
 
-static int			pp_handler__(t_format *c_flag, t_conv *tmp)
+static void			pp_handler__(t_format *c_flag, t_conv *tmp)
 {
 	int		lpad;
 	int		lprec;
-	int		ret;
+//	int		ret;
 
 	lpad = 0;
 	lprec = 0;
@@ -90,6 +89,7 @@ static int			pp_handler__(t_format *c_flag, t_conv *tmp)
 	if ((c_flag->flag & 20) || tmp->sign)
 		lpad -= 1;
 	handler__(c_flag, tmp, lpad, lprec);
+/***
 	if ((c_flag->flag & 20) || tmp->sign)
 	{
 		tmp->size++;
@@ -98,9 +98,10 @@ static int			pp_handler__(t_format *c_flag, t_conv *tmp)
 	ret = c_flag->precision > c_flag->pad ? c_flag->precision : c_flag->pad;
 	ret = ret > (int)tmp->size ? ret : tmp->size;
 	return (ret);
+**/
 }
 
-int					f_sint(t_format *c_flag, va_list arg)
+void				f_sint(t_format *c_flag, va_list arg)
 {
 	long long	conv;
 	char		buff[21];
@@ -120,10 +121,9 @@ int					f_sint(t_format *c_flag, va_list arg)
 	tmp.size = f_itoa(c_flag, conv, buff);
 	tmp.content = buff;
 	if (c_flag->pad || c_flag->precision)
-		return (pp_handler__(c_flag, &tmp));
-	if (tmp.sign || c_flag->flag & 20)
+		pp_handler__(c_flag, &tmp);
+	else if (tmp.sign || c_flag->flag & 20)
 		f_handler__(c_flag, &tmp, 0);
 	else
-		write(1, buff, tmp.size);
-	return (tmp.sign || (c_flag->flag & 20) ? tmp.size + 1 : tmp.size);
+		c_flag->buffer.w(&c_flag->buffer, buff, tmp.size);
 }
