@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 18:26:46 by jye               #+#    #+#             */
-/*   Updated: 2016/12/13 17:41:33 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 19:52:17 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void		pp_handler__(t_format *c_flag, t_conv *tmp)
 {
 	int		lpad;
 	int		lprec;
-//	int		ret;
 
 	lpad = -2;
 	lprec = 0;
@@ -55,12 +54,6 @@ static void		pp_handler__(t_format *c_flag, t_conv *tmp)
 	if (c_flag->flag & 1)
 		lpad -= 2;
 	handler__(c_flag, tmp, lpad, lprec);
-/************
-	tmp->size += 2;
-	c_flag->precision += 2;
-	ret = c_flag->precision > c_flag->pad ? c_flag->precision : c_flag->pad;
-	ret = ret > (int)tmp->size ? ret : tmp->size;
-*******/
 }
 
 void			f_pint(t_format *c_flag, va_list arg)

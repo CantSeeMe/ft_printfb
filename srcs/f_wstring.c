@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/04 18:45:59 by jye               #+#    #+#             */
-/*   Updated: 2016/12/13 17:21:39 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 19:54:17 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,4 @@ void						f_wstring(t_format *c_flag, va_list arg)
 		c_flag->buffer.w(&c_flag->buffer, a, tmp.size);
 	if (wchar != NULL)
 		free(a);
-//	return (tmp.size > (unsigned int)c_flag->pad ? tmp.size : c_flag->pad);
 }

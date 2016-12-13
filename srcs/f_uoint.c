@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 18:26:46 by jye               #+#    #+#             */
-/*   Updated: 2016/12/13 18:18:49 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 19:53:37 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ static void					pp_handler__(t_format *c_flag, t_conv *tmp)
 {
 	int		lpad;
 	int		lprec;
-//	int		ret;
 
 	lpad = 0;
 	lprec = c_flag->flag & 1 ? -1 : 0;
@@ -80,13 +79,6 @@ static void					pp_handler__(t_format *c_flag, t_conv *tmp)
 	if (c_flag->flag & 1)
 		lpad -= 1;
 	handler__(c_flag, tmp, lpad, lprec);
-/**********
-	if (c_flag->flag & 1)
-		tmp->size++;
-	ret = c_flag->precision > c_flag->pad ? c_flag->precision : c_flag->pad;
-	ret = ret > (int)tmp->size ? ret : tmp->size;
-	return (ret);
-*********/
 }
 
 void						f_uoint(t_format *c_flag, va_list arg)
@@ -111,10 +103,4 @@ void						f_uoint(t_format *c_flag, va_list arg)
 		f_handler__(c_flag, &tmp, 0);
 	else
 		c_flag->buffer.w(&c_flag->buffer, buff, tmp.size);
-/********************
-	if (c_flag->flag & 1 && !conv)
-		return (1);
-	else
-		return (c_flag->flag & 1 ? tmp.size + 1 : tmp.size);
-******************/
 }

@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/02 15:49:17 by jye               #+#    #+#             */
-/*   Updated: 2016/12/13 17:48:57 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 19:52:01 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void	pp_handler(t_format *c_flag, t_conv *tmp)
 			print_padding(pad, tmp->cpad, &c_flag->buffer);
 		c_flag->buffer.w(&c_flag->buffer, tmp->content, 1);
 	}
-//	return (c_flag->pad);
 }
 
 void		f_char(t_format *c_flag, va_list arg)
@@ -52,5 +51,4 @@ void		f_char(t_format *c_flag, va_list arg)
 		else
 			c_flag->buffer.w(&c_flag->buffer, &op, 1);
 	}
-//	return (1);
 }
