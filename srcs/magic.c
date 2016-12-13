@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/06 15:28:06 by jye               #+#    #+#             */
-/*   Updated: 2016/12/13 14:48:35 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 19:56:13 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ static int	s_flag(char **format)
 	return (z);
 }
 
-static int	s_gint(char **format, t_format *c_flag, va_list arg, char bool_prec__)
+static int	s_gint(char **format, t_format *c_flag, va_list arg,
+					char bool_prec__)
 {
 	register char	*f;
 	register int	nb;
-	(void)arg;
 
 	f = *format;
 	nb = 0;

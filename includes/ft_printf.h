@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/13 17:21:57 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 19:29:54 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ void				f_uoint(t_format *c_flag, va_list arg);
 ** --------------------------------
 ** %p Defined behavior '-'
 */
+void				f_ubint(t_format *c_flag, va_list arg);
 void				f_uxint(t_format *c_flag, va_list arg);
 void				f_pint(t_format *c_flag, va_list arg);
 /*
@@ -176,4 +177,5 @@ void				init_t_buffer__(t_buffer *buffer);
 void				write_t_buffer__(struct s_buffer *buffer, void *s,
 									unsigned long n);
 void				print_t_buffer__(struct s_buffer *buffer);
+void				*ft_memallocset(unsigned char c, unsigned long size);
 #endif

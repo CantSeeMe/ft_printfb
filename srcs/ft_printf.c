@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/13 16:46:50 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 19:55:38 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,6 @@ int			ft_printf(const char *format, ...)
 		magic_print((char **)&format, &c_da);
 	}
 	va_end(arg);
-	write(1 ,c_da.buffer.buff, c_da.buffer.i);
+	write(1, c_da.buffer.buff, c_da.buffer.i);
 	return (c_da.buffer.z);
 }

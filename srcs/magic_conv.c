@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/03 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/13 17:23:47 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 19:32:33 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,25 @@
 static void	some_other_shit(t_format *c_flag, va_list arg)
 {
 	(void)arg;
-#if 0
-	if (c_flag->format == 'f' || c_flag->format == 'F')
-		return (0);
-	else if (c_flag->format == 'e' || c_flag->format == 'E')
-		return (0);
-	else if (c_flag->format == 'a' || c_flag->format == 'A')
-		return (0);
-	else if (c_flag->format == 'g' || c_flag->format == 'G')
-		return (0);
+	if (c_flag->format == 'b')
+		f_ubint(c_flag, arg);
 	else
-#endif
 		f_undefined(c_flag);
+}
+
+static void	n_conv(t_format *c_flag, va_list arg)
+{
+	void *conv;
+
+	conv = va_arg(arg, void *);
+	if (c_flag->length & 60)
+		*((unsigned long long *)conv) = c_flag->buffer.z;
+	else if (c_flag->length & 2)
+		*((unsigned short *)conv) = c_flag->buffer.z;
+	else if (c_flag->length & 1)
+		*((unsigned char *)conv) = c_flag->buffer.z;
+	else
+		*((unsigned int *)conv) = c_flag->buffer.z;
 }
 
 void		magic_conv(t_format *c_flag, va_list arg)
@@ -42,9 +49,8 @@ void		magic_conv(t_format *c_flag, va_list arg)
 		f_wstring(c_flag, arg);
 	else if (c_flag->format == 'p')
 		f_pint(c_flag, arg);
-#if 0
 	else if (c_flag->format == 'n')
-#endif
+		n_conv(c_flag, arg);
 	else if (c_flag->format == 'D' || c_flag->format == 'd' ||
 			c_flag->format == 'i')
 		f_sint(c_flag, arg);

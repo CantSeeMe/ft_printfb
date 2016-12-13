@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 18:26:46 by jye               #+#    #+#             */
-/*   Updated: 2016/12/13 19:53:51 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/13 19:55:05 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,4 @@ void						f_uxint(t_format *c_flag, va_list arg)
 		f_handler__(c_flag, &tmp, 0);
 	else
 		c_flag->buffer.w(&c_flag->buffer, buff, tmp.size);
-/************
-	if (tmp.size && (c_flag->flag & 1) && conv)
-		return (tmp.size + 2);
-	else
-		return (tmp.size);
-*****************/
 }
