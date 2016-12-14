@@ -66,14 +66,28 @@ void		print_precision(int lprec, struct s_buffer *buffer)
 
 void		write_t_buffer__(struct s_buffer *buffer, void *s, unsigned long n)
 {
+	char *buff;
+
 	if (n + buffer->i > BUFF_SIZE)
 	{
 		write(1, buffer->buff, buffer->i);
 		buffer->i = 0;
 	}
-	ft_memcpy(buffer->buff + buffer->i, s, n);
-	buffer->i += n;
-	buffer->z += n;
+	if (n > BUFFER_SIZE)
+	{
+		if (!(buff = (char *)malloc(sizeof(char) * n)))
+			exit(EXIT_FAILURE);
+		ft_memcpy(buff, s, n);
+		write(1, buff, n);
+		buffer->z += n;
+		free(buff);
+	}
+	else
+	{
+		ft_memcpy(buffer->buff + buffer->i, s, n);
+		buffer->i += n;
+		buffer->z += n;
+	}
 }
 
 void		init_t_buffer__(t_buffer *buffer)
