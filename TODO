@@ -15,8 +15,9 @@ MEMO:
 	%X = prints uppercase hexa				type: unsigned type
 	%u = prints unsigned integer			type: unsigned type
 ////////////////floating type
-	%a = prints the 23/52 bits in hexa		type: float // double // long double but nope
-	   p+ most significant bit - 1
+	%a = prints the mantissa 23/52 bits  	type: float // double // long double but nope
+	   p exponent - 127/1023
+	   23 bits actually does a right shift by 1;
 	%A = same as a uppercase				type: float // double // long double but nope
 	%n = prints nothing, but stacks how many character is written so far;
 ////// bonus
