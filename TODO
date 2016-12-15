@@ -78,3 +78,17 @@ sign / exponent - 1023 / mantissa
 RETURN VALUE
 
 	How many character it actually outputs without '\0'
+
+
+
+
+FLOAT
+
+	TODO LIST:
+		 - %a %A precision and shit with flag on
+		 - %f %F same as above
+		 - %f precision 6 default, precision + 1 round up 
+		 - logarithm 10
+		 - %a 32 bits mantissa left shift << 1
+		 - %a 64 bits mantissa no shift
+		 - %a P = exponent
