@@ -16,7 +16,7 @@
 
 void		print_padding(int lpad, char cpad, struct s_buffer *buffer)
 {
-	char	*padd;
+//	char	*padd;
 
 	if (lpad + buffer->i > BUFF_SIZE)
 	{
@@ -25,11 +25,15 @@ void		print_padding(int lpad, char cpad, struct s_buffer *buffer)
 	}
 	if (lpad > BUFF_SIZE)
 	{
-		if (!(padd = ft_memallocset(cpad, lpad)))
-			exit(EXIT_FAILURE);
-		write(1, padd, lpad);
+		ft_memset(buffer->buff, cpad, BUFF_SIZE);
+		while (lpad >= BUFF_SIZE)
+		{
+			write(1, buffer->buff, BUFF_SIZE);
+			buffer->z += BUFF_SIZE;
+			lpad -= BUFF_SIZE;
+		}
+		write(1, buffer->buff, lpad);
 		buffer->z += lpad;
-		free(padd);
 	}
 	else
 	{
@@ -41,7 +45,7 @@ void		print_padding(int lpad, char cpad, struct s_buffer *buffer)
 
 void		print_precision(int lprec, struct s_buffer *buffer)
 {
-	char	*prec;
+//	char	*prec;
 
 	if (lprec + buffer->i > BUFF_SIZE)
 	{
@@ -50,11 +54,15 @@ void		print_precision(int lprec, struct s_buffer *buffer)
 	}
 	if (lprec > BUFF_SIZE)
 	{
-		if (!(prec = ft_memallocset(0x30, lprec)))
-			exit(EXIT_FAILURE);
-		write(1, prec, lprec);
+		ft_memset(buffer->buff, 0x30, BUFF_SIZE);
+		while (lprec >= BUFF_SIZE)
+		{
+			write(1, buffer->buff, BUFF_SIZE);
+			buffer->z += BUFF_SIZE;
+			lprec -= BUFF_SIZE;
+		}
+		write(1, buffer->buff, lprec);
 		buffer->z += lprec;
-		free(prec);
 	}
 	else
 	{
@@ -73,7 +81,7 @@ void		write_t_buffer__(struct s_buffer *buffer, void *s, unsigned long n)
 		write(1, buffer->buff, buffer->i);
 		buffer->i = 0;
 	}
-	if (n > BUFFER_SIZE)
+	if (n > BUFF_SIZE)
 	{
 		if (!(buff = (char *)malloc(sizeof(char) * n)))
 			exit(EXIT_FAILURE);
