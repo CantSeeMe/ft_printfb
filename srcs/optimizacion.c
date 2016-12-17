@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 20:50:38 by jye               #+#    #+#             */
-/*   Updated: 2016/12/13 20:00:59 by jye              ###   ########.fr       */
+/*   Updated: 2016/12/17 18:33:17 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 
 void		print_padding(int lpad, char cpad, struct s_buffer *buffer)
 {
-//	char	*padd;
-
 	if (lpad + buffer->i > BUFF_SIZE)
 	{
 		write(1, buffer->buff, buffer->i);
@@ -45,8 +43,6 @@ void		print_padding(int lpad, char cpad, struct s_buffer *buffer)
 
 void		print_precision(int lprec, struct s_buffer *buffer)
 {
-//	char	*prec;
-
 	if (lprec + buffer->i > BUFF_SIZE)
 	{
 		write(1, buffer->buff, buffer->i);
