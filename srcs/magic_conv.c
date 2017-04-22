@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/03 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2016/12/13 19:32:33 by jye              ###   ########.fr       */
+/*   Updated: 2017/04/22 21:12:28 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static void	n_conv(t_format *c_flag, va_list arg)
 
 	conv = va_arg(arg, void *);
 	if (c_flag->length & 60)
-		*((unsigned long long *)conv) = c_flag->buffer.z;
+		*((unsigned long long *)conv) = get_len();
 	else if (c_flag->length & 2)
-		*((unsigned short *)conv) = c_flag->buffer.z;
+		*((unsigned short *)conv) = get_len();
 	else if (c_flag->length & 1)
-		*((unsigned char *)conv) = c_flag->buffer.z;
+		*((unsigned char *)conv) = get_len();
 	else
-		*((unsigned int *)conv) = c_flag->buffer.z;
+		*((unsigned int *)conv) = get_len();
 }
 
 void		magic_conv(t_format *c_flag, va_list arg)

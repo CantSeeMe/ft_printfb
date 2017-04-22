@@ -6,14 +6,14 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/06 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2017/03/12 18:20:28 by root             ###   ########.fr       */
+/*   Updated: 2017/04/22 21:26:27 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <unistd.h>
 
-static int	magic_print(char **format, t_format *c_flag)
+static int	magic_print(char **format)
 {
 	char	*f;
 	char	*s_modulo;
@@ -22,7 +22,7 @@ static int	magic_print(char **format, t_format *c_flag)
 	f = *format;
 	s_modulo = ft_strchrnul(f, 0x25);
 	to_w = s_modulo - f;
-	c_flag->buffer.w(&c_flag->buffer, f, to_w);
+	write_buf(f, to_w);
 	*format += to_w;
 	return (to_w);
 }
@@ -35,7 +35,7 @@ int			ft_printf(const char *format, ...)
 	if (format == NULL)
 		return (0);
 	va_start(arg, format);
-	init_t_buffer__(1, &c_da.buffer);
+	init_buf(1);
 	while (*format)
 	{
 		if (*format == 0x25)
@@ -44,11 +44,11 @@ int			ft_printf(const char *format, ...)
 			magic(&c_da, (char **)&format, arg);
 			magic_conv(&c_da, arg);
 		}
-		magic_print((char **)&format, &c_da);
+		magic_print((char **)&format);
 	}
 	va_end(arg);
-	write(1, c_da.buffer.buff, c_da.buffer.i);
-	return (c_da.buffer.z);
+	print_buf();
+	return (get_len());
 }
 
 int			ft_dprintf(const int fd, const char *format, ...)
@@ -59,7 +59,7 @@ int			ft_dprintf(const int fd, const char *format, ...)
 	if (format == NULL)
 		return (0);
 	va_start(arg, format);
-	init_t_buffer__(fd, &c_da.buffer);
+	init_buf(fd);
 	while (*format)
 	{
 		if (*format == 0x25)
@@ -68,9 +68,9 @@ int			ft_dprintf(const int fd, const char *format, ...)
 			magic(&c_da, (char **)&format, arg);
 			magic_conv(&c_da, arg);
 		}
-		magic_print((char **)&format, &c_da);
+		magic_print((char **)&format);
 	}
 	va_end(arg);
-	write(fd, c_da.buffer.buff, c_da.buffer.i);
-	return (c_da.buffer.z);
+	print_buf();
+	return (get_len());
 }

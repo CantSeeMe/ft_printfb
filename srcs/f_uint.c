@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 18:26:46 by jye               #+#    #+#             */
-/*   Updated: 2016/12/13 19:53:18 by jye              ###   ########.fr       */
+/*   Updated: 2017/04/22 21:23:56 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,18 @@ static void					handler__(t_format *c_flag, t_conv *tmp,
 	if (c_flag->flag & 2)
 	{
 		if (lprec > 0)
-			print_precision(lprec, &c_flag->buffer);
-		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
+			print_pp(lprec, '0');
+		write_buf(tmp->content, tmp->size);
 		if (lpad > 0)
-			print_padding(lpad, tmp->cpad, &c_flag->buffer);
+			print_pp(lpad, tmp->cpad);
 	}
 	else
 	{
 		if (lpad > 0)
-			print_padding(lpad, tmp->cpad, &c_flag->buffer);
+			print_pp(lpad, tmp->cpad);
 		if (lprec > 0)
-			print_precision(lprec, &c_flag->buffer);
-		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
+			print_pp(lprec, '0');
+		write_buf(tmp->content, tmp->size);
 	}
 }
 
@@ -84,5 +84,5 @@ void						f_uint(t_format *c_flag, va_list arg)
 	if (c_flag->pad || c_flag->precision)
 		pp_handler__(c_flag, &tmp);
 	else
-		c_flag->buffer.w(&c_flag->buffer, buff, tmp.size);
+		write_buf(buff, tmp.size);
 }

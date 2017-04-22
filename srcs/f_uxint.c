@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 18:26:46 by jye               #+#    #+#             */
-/*   Updated: 2016/12/13 19:55:05 by jye              ###   ########.fr       */
+/*   Updated: 2017/04/22 21:25:12 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static void					f_handler__(t_format *c_flag, t_conv *tmp,
 	if (c_flag->flag & 1 && tmp->size && ((char *)tmp->content)[0] != 0x30)
 	{
 		if (c_flag->format == 'x')
-			c_flag->buffer.w(&c_flag->buffer, "0x", 2);
+			write_buf("0x", 2);
 		else
-			c_flag->buffer.w(&c_flag->buffer, "0X", 2);
+			write_buf("0X", 2);
 	}
 	if (c_flag->format == 'X')
 	{
@@ -52,7 +52,7 @@ static void					f_handler__(t_format *c_flag, t_conv *tmp,
 		}
 	}
 	if (!bool__)
-		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
+		write_buf(tmp->content, tmp->size);
 }
 
 static void					handler__(t_format *c_flag, t_conv *tmp,
@@ -62,22 +62,22 @@ static void					handler__(t_format *c_flag, t_conv *tmp,
 	{
 		f_handler__(c_flag, tmp, 1);
 		if (lprec > 0)
-			print_precision(lprec, &c_flag->buffer);
-		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
+			print_pp(lprec, '0');
+		write_buf(tmp->content, tmp->size);
 		if (lpad > 0)
-			print_padding(lpad, tmp->cpad, &c_flag->buffer);
+			print_pp(lpad, tmp->cpad);
 	}
 	else
 	{
 		if (tmp->cpad == 0x30)
 			f_handler__(c_flag, tmp, 1);
 		if (lpad > 0)
-			print_padding(lpad, tmp->cpad, &c_flag->buffer);
+			print_pp(lpad, tmp->cpad);
 		if (tmp->cpad != 0x30)
 			f_handler__(c_flag, tmp, 1);
 		if (lprec > 0)
-			print_precision(lprec, &c_flag->buffer);
-		c_flag->buffer.w(&c_flag->buffer, tmp->content, tmp->size);
+			print_pp(lprec, '0');
+		write_buf(tmp->content, tmp->size);
 	}
 }
 
@@ -121,5 +121,5 @@ void						f_uxint(t_format *c_flag, va_list arg)
 	else if (c_flag->flag & 1 || c_flag->format == 'X')
 		f_handler__(c_flag, &tmp, 0);
 	else
-		c_flag->buffer.w(&c_flag->buffer, buff, tmp.size);
+		write_buf(buff, tmp.size);
 }

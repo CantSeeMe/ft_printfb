@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 20:32:26 by jye               #+#    #+#             */
-/*   Updated: 2016/12/13 19:53:03 by jye              ###   ########.fr       */
+/*   Updated: 2017/04/22 21:25:22 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ static void	pp_handler(t_format *c_flag, t_conv *tmp)
 	pad = c_flag->pad - tmp->size;
 	if (c_flag->flag & 2)
 	{
-		c_flag->buffer.w(&c_flag->buffer, tmp->content, 1);
+		write_buf(tmp->content, 1);
 		if (pad > 0)
-			print_padding(pad, tmp->cpad, &c_flag->buffer);
+			print_pp(pad, tmp->cpad);
 	}
 	else
 	{
 		if (pad > 0)
-			print_padding(pad, tmp->cpad, &c_flag->buffer);
-		c_flag->buffer.w(&c_flag->buffer, tmp->content, 1);
+			print_pp(pad, tmp->cpad);
+		write_buf(tmp->content, 1);
 	}
 }
 
@@ -48,5 +48,5 @@ void		f_undefined(t_format *c_flag)
 		return ;
 	}
 	if (undef)
-		c_flag->buffer.w(&c_flag->buffer, &undef, 1);
+		write_buf(&undef, 1);
 }

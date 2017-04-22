@@ -6,98 +6,81 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 20:50:38 by jye               #+#    #+#             */
-/*   Updated: 2017/03/12 18:40:20 by root             ###   ########.fr       */
+/*   Updated: 2017/04/22 21:28:05 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdlib.h>
 #include <unistd.h>
+#define IO_SIZE 4096
 
-void		print_padding(int lpad, char cpad, struct s_buffer *buffer)
+static char		g_buff[IO_SIZE];
+static int		g_fd;
+static int		g_i;
+static size_t	g_len;
+
+void		print_pp(int lpp, char cpad)
 {
-	if (lpad + buffer->i > IO_STREAM)
+	if (lpp + g_i > IO_SIZE)
+		print_buf();
+	if (lpp > IO_SIZE)
 	{
-		write(buffer->fd, buffer->buff, buffer->i);
-		buffer->i = 0;
-	}
-	if (lpad > IO_STREAM)
-	{
-		ft_memset(buffer->buff, cpad, IO_STREAM);
-		while (lpad >= IO_STREAM)
+		ft_memset(g_buff, cpad, IO_SIZE);
+		while (lpp >= IO_SIZE)
 		{
-			write(buffer->fd, buffer->buff, IO_STREAM);
-			buffer->z += IO_STREAM;
-			lpad -= IO_STREAM;
+			write(g_fd, g_buff, IO_SIZE);
+			g_len += IO_SIZE;
+			lpp -= IO_SIZE;
 		}
-		write(buffer->fd, buffer->buff, lpad);
-		buffer->z += lpad;
+		write(g_fd, g_buff, lpp);
+		g_len += lpp;
 	}
 	else
 	{
-		ft_memset(buffer->buff + buffer->i, cpad, lpad);
-		buffer->i += lpad;
-		buffer->z += lpad;
+		ft_memset(g_buff + g_i, cpad, lpp);
+		g_i += lpp;
+		g_len += lpp;
 	}
 }
 
-void		print_precision(int lprec, struct s_buffer *buffer)
-{
-	if (lprec + buffer->i > IO_STREAM)
-	{
-		write(buffer->fd, buffer->buff, buffer->i);
-		buffer->i = 0;
-	}
-	if (lprec > IO_STREAM)
-	{
-		ft_memset(buffer->buff, 0x30, IO_STREAM);
-		while (lprec >= IO_STREAM)
-		{
-			write(buffer->fd, buffer->buff, IO_STREAM);
-			buffer->z += IO_STREAM;
-			lprec -= IO_STREAM;
-		}
-		write(buffer->fd, buffer->buff, lprec);
-		buffer->z += lprec;
-	}
-	else
-	{
-		ft_memset(buffer->buff + buffer->i, 0x30, lprec);
-		buffer->i += lprec;
-		buffer->z += lprec;
-	}
-}
-
-void		write_t_buffer__(struct s_buffer *buffer, void *s, unsigned long n)
+void		write_buf(void *s, unsigned long n)
 {
 	char *buff;
 
-	if (n + buffer->i > IO_STREAM)
-	{
-		write(buffer->fd, buffer->buff, buffer->i);
-		buffer->i = 0;
-	}
-	if (n > IO_STREAM)
+	if (n + g_i > IO_SIZE)
+		print_buf();
+	if (n > IO_SIZE)
 	{
 		if (!(buff = (char *)malloc(sizeof(char) * n)))
 			exit(EXIT_FAILURE);
 		ft_memcpy(buff, s, n);
-		write(buffer->fd, buff, n);
-		buffer->z += n;
+		write(g_fd, g_buff, n);
+		g_len += n;
 		free(buff);
 	}
 	else
 	{
-		ft_memcpy(buffer->buff + buffer->i, s, n);
-		buffer->i += n;
-		buffer->z += n;
+		ft_memcpy(g_buff + g_i, s, n);
+		g_i += n;
+		g_len += n;
 	}
 }
 
-void		init_t_buffer__(const int fd, t_buffer *buffer)
+void		print_buf(void)
 {
-	buffer->z = 0;
-	buffer->i = 0;
-	buffer->fd = fd;
-	buffer->w = &write_t_buffer__;
+	write(g_fd, g_buff, g_i);
+	g_i = 0;
+}
+
+size_t		get_len(void)
+{
+	return (g_len);
+}
+
+void		init_buf(int fd)
+{
+	g_i = 0;
+	g_fd = fd;
+	g_len = 0;
 }

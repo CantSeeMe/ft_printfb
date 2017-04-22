@@ -6,20 +6,20 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/01 00:00:00 by jye               #+#    #+#             */
-/*   Updated: 2017/03/12 18:22:42 by root             ###   ########.fr       */
+/*   Updated: 2017/04/22 21:14:26 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include <stdarg.h>
+# include <string.h>
 # include "libft.h"
 # define FLAG "#-+0 "
 # define RESET "#-+0 .*lhjz"
 # define BASE "0123456789abcdef"
 # define LENGTH "lhjz"
 # define SNULL "(null)"
-# define IO_STREAM 384
 # define BYTE 0x6868
 # define WORD 0x68
 # define DWORD 0x6c
@@ -31,23 +31,13 @@
 **Typedefs
 */
 
-typedef struct		s_buffer
-{
-	void	(*w)(struct s_buffer *, void *, unsigned long);
-	int		z;
-	int		i;
-	int		fd;
-	char	buff[IO_STREAM];
-}					t_buffer;
-
 typedef struct		s_format
 {
-	t_buffer		buffer;
 	int				pad;
 	int				precision;
-	unsigned char	flag;
-	unsigned char	length;
-	unsigned char	format;
+	unsigned int	flag;
+	unsigned int	length;
+	unsigned int	format;
 }					t_format;
 
 typedef struct		s_conv
@@ -141,11 +131,11 @@ int					f_utob(t_format *c_flag, unsigned long long int z,
 **etc function
 */
 char				*ft_strchrnul(const char *s, unsigned char c);
-void				print_padding(int lpad, char cpad, struct s_buffer *buffer);
-void				print_precision(int lprec, struct s_buffer *buffer);
-void				init_t_buffer__(const int fd, t_buffer *buffer);
-void				write_t_buffer__(struct s_buffer *buffer, void *s,
-									unsigned long n);
-void				print_t_buffer__(struct s_buffer *buffer);
+void				print_pp(int lpad, char cpad);
+void				init_buf(const int fd);
+void				write_buf(void *s, unsigned long n);
+void				print_buf(void);
+size_t				get_len(void);
 void				*ft_memallocset(unsigned char c, unsigned long size);
+
 #endif

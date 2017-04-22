@@ -6,14 +6,14 @@
 #    By: jye <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/02 15:55:18 by jye               #+#    #+#              #
-#    Updated: 2017/03/15 17:48:25 by jye              ###   ########.fr        #
+#    Updated: 2017/04/22 20:02:51 by jye              ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 # Compiler
 
 CC		=	gcc
-CFLAG	=	-Wall -Wextra -Werror -g
+CFLAG	=	-Wall -Wextra -Werror
 
 # Directories
 
@@ -47,12 +47,8 @@ fclean		:	clean
 re			:	fclean all
 
 $(NAME)		:	$(OBJ)
-	@ar -rcs $@ $(OBJ)
-	@printf "\033[2K"
-	@printf "\033[34m\033[1mGenerating %s file\r" $@
+	ar -rcs $@ $(OBJ)
 
 $(ODIR)/%.o	:	$(SDIR)/%.c $(LIBFT)
 	@/bin/mkdir -p $(ODIR)
-	@$(CC) -c -o $@ $< $(CFLAG) -I$(HDIR)
-	@printf "\033[2K"
-	@printf "\033[34m\033[1mGenerating %s file\r" $@
+	$(CC) -c -o $@ $< $(CFLAG) -I$(HDIR)
