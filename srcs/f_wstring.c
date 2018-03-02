@@ -6,7 +6,7 @@
 /*   By: jye <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/04 18:45:59 by jye               #+#    #+#             */
-/*   Updated: 2017/04/22 21:20:47 by jye              ###   ########.fr       */
+/*   Updated: 2018/01/17 01:15:36 by jye              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void						f_wstring(t_format *c_flag, va_list arg)
 		a = SNULL;
 	w_len = ft_wstrlen(wchar);
 	if (a == NULL)
-		if ((a = ft_strnew(w_len * 4)) == NULL)
+		if ((a = malloc(w_len * 4)) == NULL)
 			exit(EXIT_FAILURE);
 	if ((c_flag->flag & 10) == 10)
 		c_flag->flag ^= 8;
