@@ -12,7 +12,7 @@ This library depends on libft to work properly
 
 LINK
 
-To link the library, provide "-lft_printf" on gcc
+To link the library, provide "-lftprintf" on gcc
 
 NOTE
 
